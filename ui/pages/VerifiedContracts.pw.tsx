@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/experimental-ct-react';
+import { test, expect, devices } from '@playwright/experimental-ct-react';
 import React from 'react';
 
 import * as textAdMock from 'mocks/ad/textAd';
@@ -25,7 +25,7 @@ test.beforeEach(async({ page }) => {
   });
 });
 
-test('base view +@mobile', async({ mount, page }) => {
+test('base view', async({ mount, page }) => {
   await page.route(VERIFIED_CONTRACTS_API_URL, (route) => route.fulfill({
     status: 200,
     body: JSON.stringify(verifiedContractsMock.baseResponse),
@@ -42,4 +42,27 @@ test('base view +@mobile', async({ mount, page }) => {
   );
 
   await expect(component).toHaveScreenshot();
+});
+
+test.describe('mobile', () => {
+  test.use({ viewport: devices['iPhone 13 Pro'].viewport });
+  test('base view', async({ mount, page }) => {
+
+    await page.route(VERIFIED_CONTRACTS_API_URL, (route) => route.fulfill({
+      status: 200,
+      body: JSON.stringify(verifiedContractsMock.baseResponse),
+    }));
+    await page.route(VERIFIED_CONTRACTS_COUNTERS_API_URL, (route) => route.fulfill({
+      status: 200,
+      body: JSON.stringify(verifiedContractsCountersMock),
+    }));
+
+    const component = await mount(
+      <TestApp>
+        <VerifiedContracts/>
+      </TestApp>,
+    );
+
+    await expect(component).toHaveScreenshot();
+  });
 });
