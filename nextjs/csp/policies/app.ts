@@ -65,6 +65,8 @@ export function app(): CspDev.DirectiveDescriptor {
 
       // github (spec for api-docs page)
       'raw.githubusercontent.com',
+      'api.web3modal.org',
+      'rpc.walletconnect.org',
     ].filter(Boolean),
 
     'script-src': [
@@ -77,6 +79,7 @@ export function app(): CspDev.DirectiveDescriptor {
 
       // hash of ColorModeScript
       '\'sha256-e7MRMmTzLsLQvIy1iizO1lXf7VWYoQ6ysj5fuUzvRwE=\'',
+      '\'sha256-gPjlli1HEdLlR0AZTY971/wQVOdSkl9mEinLnxrPpJw=\'',
     ],
 
     'style-src': [
