@@ -1,8 +1,6 @@
 import { Box, HStack, Text, VStack, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 
-import { getFeaturePayload } from 'configs/app/features/types';
-
 import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
 import { VALIDATORS_COUNTERS } from 'stubs/validators';
@@ -10,7 +8,6 @@ import StatsWidget from 'ui/shared/stats/StatsWidget';
 
 const ValidatorsCounters = () => {
   const countersQuery = useApiQuery('validators_counters', {
-    pathParams: { chainType: getFeaturePayload(config.features.validators)?.chainType },
     queryOptions: {
       placeholderData: VALIDATORS_COUNTERS,
     },

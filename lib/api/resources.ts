@@ -764,7 +764,6 @@ export const RESOURCES = {
   },
   validators_counters: {
     path: '/api/v2/validators/stats',
-    pathParams: [ 'chainType' as const ],
   },
 
   // BLOBS
