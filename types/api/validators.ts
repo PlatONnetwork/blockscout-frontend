@@ -10,7 +10,7 @@ export interface Validator {
   role: ValidatorRole;
   commission: number;
   total_bonded_amount: string;
-  total_bonded_percent: number;
+  total_bonded_percent: string;
   delegate_amount: string;
   expect_apr: string | null;
   block_rate: string | null;
