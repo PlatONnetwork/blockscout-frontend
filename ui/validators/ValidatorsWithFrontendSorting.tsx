@@ -4,6 +4,7 @@ import React, { useMemo } from 'react';
 import type { ValidatorsSortingValue } from 'types/api/validators';
 
 import * as cookies from 'lib/cookies';
+import useNewValidatorsSocket from 'lib/hooks/useNewValidatorsSocket';
 import { apos } from 'lib/html-entities';
 import DataListDisplay from 'ui/shared/DataListDisplay';
 import type { QueryWithPagesResult } from 'ui/shared/pagination/useQueryWithPages';
@@ -35,15 +36,22 @@ const ValidatorsWithFrontendSorting = ({ query, searchTerm }: Props) => {
     });
   }, []);
 
-  const sortedList = useMemo(() => data?.items.slice().sort(sortValidators(sort)), [ data, sort ]);
+  const { num, socketAlert } = useNewValidatorsSocket();
 
+  const sortedList = useMemo(() => data?.items.slice().sort(sortValidators(sort)), [ data, sort ]);
   const content = sortedList ? (
     <>
       <Show below="lg" ssr={ false }>
         <ValidatorsList data={ sortedList } isLoading={ isPlaceholderData }/>
       </Show>
       <Hide below="lg" ssr={ false }>
-        <ValidatorsTable data={ sortedList } sort={ sort } setSorting={ setSortByValue } isLoading={ isPlaceholderData }/>
+        <ValidatorsTable
+          socketInfoNum={ num }
+          socketInfoAlert={ socketAlert }
+          data={ sortedList }
+          sort={ sort }
+          setSorting={ setSortByValue }
+          isLoading={ isPlaceholderData }/>
       </Hide>
     </>
   ) : null;

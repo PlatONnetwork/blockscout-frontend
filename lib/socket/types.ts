@@ -34,6 +34,9 @@ SocketMessage.TokenTransfers |
 SocketMessage.TokenTotalSupply |
 SocketMessage.ContractVerification |
 SocketMessage.NewZkEvmL2Batch |
+SocketMessage.AllValidators |
+SocketMessage.ActiveValidators |
+SocketMessage.CandidateValidators |
 SocketMessage.Unknown;
 
 interface SocketMessageParamsGeneric<Event extends string | undefined, Payload extends object | unknown> {
@@ -71,5 +74,8 @@ export namespace SocketMessage {
   export type TokenTotalSupply = SocketMessageParamsGeneric<'total_supply', {total_supply: number }>;
   export type ContractVerification = SocketMessageParamsGeneric<'verification_result', SmartContractVerificationResponse>;
   export type NewZkEvmL2Batch = SocketMessageParamsGeneric<'new_zkevm_confirmed_batch', NewZkEvmBatchSocketResponse>;
+  export type AllValidators = SocketMessageParamsGeneric<'all_validator', number>;
+  export type ActiveValidators = SocketMessageParamsGeneric<'active_validator', number>;
+  export type CandidateValidators = SocketMessageParamsGeneric<'candidate_validator', number>;
   export type Unknown = SocketMessageParamsGeneric<undefined, unknown>;
 }

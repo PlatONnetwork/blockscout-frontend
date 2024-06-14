@@ -16,12 +16,7 @@ import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 import RoutedTabs from 'ui/shared/Tabs/RoutedTabs';
 import ValidatorsCounters from 'ui/validators/ValidatorsCounters';
 import ValidatorsWithFrontendSorting from 'ui/validators/ValidatorsWithFrontendSorting';
-const TAB_LIST_PROPS = {
-  marginBottom: 0,
-  pt: 6,
-  pb: 3,
-  marginTop: -5,
-};
+
 const Validators = () => {
   const router = useRouter();
   const [ searchTerm, setSearchTerm ] = React.useState(getQueryParamString(router.query.q) || undefined);
@@ -99,33 +94,22 @@ const Validators = () => {
     setSearchTerm('');
   }, []);
 
-  const currentQuery = {
-    all: allQuery,
-    active: activeQuery,
-    candidate: candidateQuery,
-  }[tab];
-
-  const isEmpty = !currentQuery?.data?.items?.length;
-
   return (
     <Box>
       <PageTitle title="Validators" withTextAd/>
       <ValidatorsCounters/>
       <RoutedTabs
         tabs={ tabs }
-        tabListProps={ isMobile ? undefined : TAB_LIST_PROPS }
         rightSlotProps={ isMobile ? null : { ml: '10px', flex: 1 } }
         rightSlot={ isMobile ? null : (
-          <Flex width="100%" justifyContent={ isEmpty ? 'flex-end' : 'space-between' }>
-            { !isEmpty ? (
-              <FilterInput
-                w={{ base: '100%', lg: '450px' }}
-                size="xs"
-                onChange={ setSearchTerm }
-                placeholder="Search by validator name or address"
-                initialValue={ searchTerm }
-              />
-            ) : null }
+          <Flex width="100%" justifyContent="space-between">
+            <FilterInput
+              w={{ base: '100%', lg: '450px' }}
+              size="xs"
+              onChange={ setSearchTerm }
+              placeholder="Search by validator name or address"
+              initialValue={ searchTerm }
+            />
             <Link href="/history-validators">Historical Validators</Link>
           </Flex>
         ) }

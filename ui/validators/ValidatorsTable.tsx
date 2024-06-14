@@ -1,10 +1,13 @@
 import { Table, Tbody, Tr, Th, Link } from '@chakra-ui/react';
+import { AnimatePresence } from 'framer-motion';
 import React from 'react';
 
 import type { Validator, ValidatorsSorting, ValidatorsSortingField, ValidatorsSortingValue } from 'types/api/validators';
 
+import { AddressHighlightProvider } from 'lib/contexts/addressHighlight';
 import { ACTION_BAR_HEIGHT_DESKTOP } from 'ui/shared/ActionBar';
 import IconSvg from 'ui/shared/IconSvg';
+import * as SocketNewItemsNotice from 'ui/shared/SocketNewItemsNotice';
 import getNextSortValue from 'ui/shared/sort/getNextSortValue';
 import { default as Thead } from 'ui/shared/TheadSticky';
 
@@ -16,9 +19,11 @@ interface Props {
   sort: ValidatorsSortingValue | undefined;
   setSorting: (val: ValidatorsSortingValue | undefined) => void;
   isLoading?: boolean;
+  socketInfoAlert?: string;
+  socketInfoNum?: number;
 }
 
-const ValidatorsTable = ({ data, sort, setSorting, isLoading }: Props) => {
+const ValidatorsTable = ({ data, sort, setSorting, isLoading, socketInfoAlert, socketInfoNum }: Props) => {
   const sortIconTransform = sort?.includes('asc' as ValidatorsSorting['order']) ? 'rotate(-90deg)' : 'rotate(90deg)';
 
   const onSortToggle = React.useCallback((field: ValidatorsSortingField) => () => {
@@ -27,59 +32,72 @@ const ValidatorsTable = ({ data, sort, setSorting, isLoading }: Props) => {
   }, [ sort, setSorting ]);
 
   return (
-    <Table variant="simple" size="sm">
-      <Thead top={ ACTION_BAR_HEIGHT_DESKTOP }>
-        <Tr>
-          <Th width={ 20 }>Rank</Th>
-          <Th>Validators</Th>
-          <Th>Status</Th>
-          <Th>
-            <Link
-              display="flex"
-              alignItems="center"
-              onClick={ isLoading ? undefined : onSortToggle('commission') }
-              columnGap={ 1 }
-            >
-              { sort?.includes('commission') && <IconSvg name="arrows/east" boxSize={ 4 } transform={ sortIconTransform }/> }
+    <AddressHighlightProvider>
+      <Table variant="simple" minWidth="1040px" size="sm">
+        <Thead top={ ACTION_BAR_HEIGHT_DESKTOP }>
+          <Tr>
+            <Th width={ 100 }>Rank</Th>
+            <Th width="20%">Validators</Th>
+            <Th width="20%">Status</Th>
+            <Th width="15%">
+              <Link
+                display="flex"
+                alignItems="center"
+                onClick={ isLoading ? undefined : onSortToggle('commission') }
+                columnGap={ 1 }
+              >
+                { sort?.includes('commission') && <IconSvg name="arrows/east" boxSize={ 4 } transform={ sortIconTransform }/> }
               Commission
-            </Link>
-          </Th>
-          <Th>Total Bonded</Th>
-          <Th>Delegations</Th>
-          <Th>
-            <Link
-              display="flex"
-              alignItems="center"
-              onClick={ isLoading ? undefined : onSortToggle('expect_apr') }
-              columnGap={ 1 }
-            >
-              { sort?.includes('expect_apr') && <IconSvg name="arrows/east" boxSize={ 4 } transform={ sortIconTransform }/> }
+              </Link>
+            </Th>
+            <Th width="15%">Total Bonded</Th>
+            <Th width="15%">Delegations</Th>
+            <Th width="150px" >
+              <Link
+                display="flex"
+                alignItems="center"
+                onClick={ isLoading ? undefined : onSortToggle('expect_apr') }
+                columnGap={ 1 }
+              >
+                { sort?.includes('expect_apr') && <IconSvg name="arrows/east" boxSize={ 4 } transform={ sortIconTransform }/> }
               Expect APR
-            </Link>
-          </Th>
-          <Th isNumeric>
-            <Link
-              display="flex"
-              alignItems="center"
-              justifyContent="flex-end"
-              onClick={ isLoading ? undefined : onSortToggle('block_rate') }
-              columnGap={ 1 }
-            >
-              { sort?.includes('block_rate') && <IconSvg name="arrows/east" boxSize={ 4 } transform={ sortIconTransform }/> }
+              </Link>
+            </Th>
+            <Th width="20%" isNumeric>
+              <Link
+                display="flex"
+                alignItems="center"
+                justifyContent="flex-end"
+                onClick={ isLoading ? undefined : onSortToggle('block_rate') }
+                columnGap={ 1 }
+              >
+                { sort?.includes('block_rate') && <IconSvg name="arrows/east" boxSize={ 4 } transform={ sortIconTransform }/> }
               Block Rate(24h)
-            </Link>
-          </Th>
-        </Tr>
-      </Thead>
-      <Tbody>
-        { data.map((item, index) => (
-          <ValidatorsTableItem
-            key={ String(item.rank) + (isLoading ? index : '') }
-            data={ item }
-            isLoading={ isLoading }/>
-        )) }
-      </Tbody>
-    </Table>
+              </Link>
+            </Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+
+          <SocketNewItemsNotice.Desktop
+            url={ window.location.href }
+            alert={ socketInfoAlert }
+            num={ socketInfoNum }
+            isLoading={ isLoading }
+            type="validator"
+          />
+
+          <AnimatePresence initial={ false }>
+            { data.map((item, index) => (
+              <ValidatorsTableItem
+                key={ String(item.rank) + (isLoading ? index : '') }
+                data={ item }
+                isLoading={ isLoading }/>
+            )) }
+          </AnimatePresence>
+        </Tbody>
+      </Table>
+    </AddressHighlightProvider>
   );
 };
 
