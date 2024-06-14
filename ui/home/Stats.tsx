@@ -1,4 +1,4 @@
-import { Grid } from '@chakra-ui/react';
+import { Flex, Grid, Text } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
 
@@ -156,6 +156,46 @@ const Stats = () => {
             isLoading={ isLoading }
           />
         ) }
+
+        <StatsItem
+          icon="gas"
+          title="Total Supply"
+          value={ Number(data.total_supply || 0).toLocaleString() }
+          _last={ isOdd ? lastItemTouchStyle : undefined }
+          isLoading={ isLoading }
+        />
+        <StatsItem
+          icon="gas"
+          title="Circulating"
+          value={ Number(data.circulating || 0).toLocaleString() }
+          isLoading={ isLoading }
+        />
+        <StatsItem
+          icon="gas"
+          title="Total Staked"
+          value={ (
+            <Flex>
+              { Number(data.total_assets_staked || 0).toLocaleString() }
+              <Text color="gray.500">{ `(${ Number((Number(data.staked_rate) * 100 || 0).toFixed(2)) }%)` }</Text>
+            </Flex>
+          ) }
+          isLoading={ isLoading }
+        />
+        <StatsItem
+          icon="transactions"
+          title="Validators"
+          value={ Number(data.validator_count).toLocaleString() }
+          url={ route({ pathname: '/validators' }) }
+          isLoading={ isLoading }
+        />
+        { /* <StatsItem
+          icon="transactions"
+          title="Next L2 State Batch Block"
+          value={ Number(data.next_l2_state_batch_block).toLocaleString() }
+          url={ route({ pathname: '/batches-withdrawals' }) }
+          _last={ isOdd ? lastItemTouchStyle : undefined }
+          isLoading={ isLoading }
+        /> */ }
       </>
     );
   }

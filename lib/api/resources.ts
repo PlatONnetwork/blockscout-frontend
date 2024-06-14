@@ -66,6 +66,7 @@ import type {
   OptimisticL2TxnBatchesResponse,
   OptimisticL2WithdrawalsResponse,
 } from 'types/api/optimisticL2';
+import type { PlatonL2DepositsResponse, PlatonL2WithdrawalsResponse } from 'types/api/platonL2';
 import type { RawTracesResponse } from 'types/api/rawTrace';
 import type { SearchRedirectResult, SearchResult, SearchResultFilters, SearchResultItem } from 'types/api/search';
 import type { ShibariumWithdrawalsResponse, ShibariumDepositsResponse } from 'types/api/shibarium';
@@ -757,12 +758,12 @@ export const RESOURCES = {
 
   // VALIDATORS
   validators: {
-    path: '/api/v2/validators/:chainType',
-    pathParams: [ 'chainType' as const ],
-    filterFields: [ 'address_hash' as const, 'state_filter' as const ],
+    path: '/api/v2/validators/:status',
+    pathParams: [ 'status' as const ],
+    filterFields: [ 'q' as const ],
   },
   validators_counters: {
-    path: '/api/v2/validators/:chainType/counters',
+    path: '/api/v2/validators/stats',
     pathParams: [ 'chainType' as const ],
   },
 
@@ -804,6 +805,23 @@ export const RESOURCES = {
   graphql: {
     path: '/api/v1/graphql',
   },
+  // PlatON L2
+  platon_l2_deposits: {
+    path: '/api/v2/platon-appchain/deposits',
+  },
+
+  platon_l2_deposits_count: {
+    path: '/api/v2/platon-appchain/deposits/count',
+  },
+
+  platon_l2_withdrawals: {
+    path: '/api/v2/platon-appchain/withdrawals',
+  },
+
+  platon_l2_withdrawals_count: {
+    path: '/api/v2/platon-appchain/withdrawals/count',
+  },
+
 };
 
 export type ResourceName = keyof typeof RESOURCES;
@@ -852,7 +870,8 @@ export type PaginatedResources = 'blocks' | 'block_txs' |
 'zksync_l2_txn_batches' | 'zksync_l2_txn_batch_txs' |
 'withdrawals' | 'address_withdrawals' | 'block_withdrawals' |
 'watchlist' | 'private_tags_address' | 'private_tags_tx' |
-'domains_lookup' | 'addresses_lookup' | 'user_ops' | 'validators' | 'noves_address_history';
+'domains_lookup' | 'addresses_lookup' | 'user_ops' | 'validators' | 'noves_address_history' |
+'platon_l2_deposits' | 'platon_l2_withdrawals';
 
 export type PaginatedResponse<Q extends PaginatedResources> = ResourcePayload<Q>;
 
@@ -996,6 +1015,10 @@ Q extends 'user_op_interpretation'? TxInterpretationResponse :
 Q extends 'noves_transaction' ? NovesResponseData :
 Q extends 'noves_address_history' ? NovesAccountHistoryResponse :
 Q extends 'noves_describe_txs' ? NovesDescribeTxsResponse :
+Q extends 'platon_l2_withdrawals' ? PlatonL2WithdrawalsResponse :
+Q extends 'platon_l2_withdrawals_count' ? number :
+Q extends 'platon_l2_deposits' ? PlatonL2DepositsResponse :
+Q extends 'platon_l2_deposits_count' ? number :
 never;
 /* eslint-enable @typescript-eslint/indent */
 

@@ -1,35 +1,42 @@
-import type { AddressParam } from './addressParams';
+export enum ValidatorRole {
+  ACTIVE = 0,
+  CANDIDATE = 1,
+  VERIFYING = 2,
+}
 
 export interface Validator {
-  address: AddressParam;
-  blocks_validated_count: number;
-  state: 'active' | 'probation' | 'inactive';
+  rank: number;
+  validators: string;
+  role: ValidatorRole;
+  commission: number;
+  total_bonded_amount: string;
+  total_bonded_percent: number;
+  delegate_amount: string;
+  expect_apr: string | null;
+  block_rate: string | null;
 }
 
 export interface ValidatorsResponse {
   items: Array<Validator>;
-  next_page_params: {
-    'address_hash': string;
-    'blocks_validated': string;
-    'items_count': string;
-    'state': Validator['state'];
-  } | null;
+  next_page_params: null;
 }
 
 export interface ValidatorsCountersResponse {
-  active_validators_counter: string;
-  active_validators_percentage: number;
-  new_validators_counter_24h: string;
-  validators_counter: string;
+  reward_pool: string;
+  total_bonded: string;
+  total_bonded_24_hours: string;
+  validators: number;
+  validators_24_hours: number;
+  block_reward: string;
+  epoch_staking_reward: string;
 }
 
 export interface ValidatorsFilters {
-  // address_hash: string | undefined; // right now API doesn't support filtering by address_hash
-  state_filter: Validator['state'] | undefined;
+  q: string;
 }
 
 export interface ValidatorsSorting {
-  sort: 'state' | 'blocks_validated';
+  sort: 'commission' | 'expect_apr' | 'block_rate';
   order: 'asc' | 'desc';
 }
 

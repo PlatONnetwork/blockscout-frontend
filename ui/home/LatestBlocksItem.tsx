@@ -59,14 +59,16 @@ const LatestBlocksItem = ({ block, isLoading }: Props) => {
         <Skeleton isLoaded={ !isLoading }>Txn</Skeleton>
         <Skeleton isLoaded={ !isLoading } color="text_secondary"><span>{ block.tx_count }</span></Skeleton>
 
-        { !config.features.rollup.isEnabled && !config.UI.views.block.hiddenFields?.total_reward && (
+        { /* NOTE 原逻辑非L2节点才展示 */ }
+        { !config.UI.views.block.hiddenFields?.total_reward && (
           <>
             <Skeleton isLoaded={ !isLoading }>Reward</Skeleton>
             <Skeleton isLoaded={ !isLoading } color="text_secondary"><span>{ totalReward.dp(10).toFixed() }</span></Skeleton>
           </>
         ) }
 
-        { !config.features.rollup.isEnabled && !config.UI.views.block.hiddenFields?.miner && (
+        { /* NOTE 原逻辑非L2节点才展示 */ }
+        { !config.UI.views.block.hiddenFields?.miner && (
           <>
             <Skeleton isLoaded={ !isLoading } textTransform="capitalize">{ getNetworkValidatorTitle() }</Skeleton>
             <AddressEntity

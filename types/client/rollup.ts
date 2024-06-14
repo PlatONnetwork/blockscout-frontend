@@ -5,6 +5,7 @@ export const ROLLUP_TYPES = [
   'shibarium',
   'zkEvm',
   'zkSync',
+  'platon-appchain',
 ] as const;
 
 export type RollupType = ArrayElement<typeof ROLLUP_TYPES>;

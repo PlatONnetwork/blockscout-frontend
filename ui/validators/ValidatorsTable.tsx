@@ -30,28 +30,43 @@ const ValidatorsTable = ({ data, sort, setSorting, isLoading }: Props) => {
     <Table variant="simple" size="sm">
       <Thead top={ ACTION_BAR_HEIGHT_DESKTOP }>
         <Tr>
-          <Th width="50%">Validator’s address</Th>
-          <Th width="25%">
+          <Th width={ 20 }>Rank</Th>
+          <Th>Validators</Th>
+          <Th>Status</Th>
+          <Th>
             <Link
               display="flex"
               alignItems="center"
-              onClick={ isLoading ? undefined : onSortToggle('state') }
+              onClick={ isLoading ? undefined : onSortToggle('commission') }
               columnGap={ 1 }
             >
-              { sort?.includes('state') && <IconSvg name="arrows/east" boxSize={ 4 } transform={ sortIconTransform }/> }
-              Status
+              { sort?.includes('commission') && <IconSvg name="arrows/east" boxSize={ 4 } transform={ sortIconTransform }/> }
+              Commission
             </Link>
           </Th>
-          <Th width="25%" isNumeric>
+          <Th>Total Bonded</Th>
+          <Th>Delegations</Th>
+          <Th>
+            <Link
+              display="flex"
+              alignItems="center"
+              onClick={ isLoading ? undefined : onSortToggle('expect_apr') }
+              columnGap={ 1 }
+            >
+              { sort?.includes('expect_apr') && <IconSvg name="arrows/east" boxSize={ 4 } transform={ sortIconTransform }/> }
+              Expect APR
+            </Link>
+          </Th>
+          <Th isNumeric>
             <Link
               display="flex"
               alignItems="center"
               justifyContent="flex-end"
-              onClick={ isLoading ? undefined : onSortToggle('blocks_validated') }
+              onClick={ isLoading ? undefined : onSortToggle('block_rate') }
               columnGap={ 1 }
             >
-              { sort?.includes('blocks_validated') && <IconSvg name="arrows/east" boxSize={ 4 } transform={ sortIconTransform }/> }
-              Blocks
+              { sort?.includes('block_rate') && <IconSvg name="arrows/east" boxSize={ 4 } transform={ sortIconTransform }/> }
+              Block Rate(24h)
             </Link>
           </Th>
         </Tr>
@@ -59,7 +74,7 @@ const ValidatorsTable = ({ data, sort, setSorting, isLoading }: Props) => {
       <Tbody>
         { data.map((item, index) => (
           <ValidatorsTableItem
-            key={ item.address.hash + (isLoading ? index : '') }
+            key={ String(item.rank) + (isLoading ? index : '') }
             data={ item }
             isLoading={ isLoading }/>
         )) }

@@ -1,5 +1,6 @@
 import { Box, Flex, Text, Skeleton, useColorModeValue, chakra } from '@chakra-ui/react';
 import NextLink from 'next/link';
+import type { ReactNode } from 'react';
 import React from 'react';
 
 import type { Route } from 'nextjs-routes';
@@ -12,7 +13,7 @@ type Props = {
   value: string;
   valuePrefix?: string;
   valuePostfix?: string;
-  hint?: string;
+  hint?: ReactNode;
   isLoading?: boolean;
   diff?: string | number;
   diffFormatted?: string;
@@ -71,10 +72,10 @@ const StatsWidget = ({ label, value, valuePrefix, valuePostfix, isLoading, hint,
             { valuePrefix && <chakra.span fontWeight={ 500 } fontSize="lg" lineHeight={ 6 } whiteSpace="pre">{ valuePrefix }</chakra.span> }
             <TruncatedValue isLoading={ isLoading } fontWeight={ 500 } fontSize="lg" lineHeight={ 6 } value={ value }/>
             { valuePostfix && <chakra.span fontWeight={ 500 } fontSize="lg" lineHeight={ 6 } whiteSpace="pre">{ valuePostfix }</chakra.span> }
-            { diff && Number(diff) > 0 && (
+            { diff && (
               <>
                 <Text fontWeight={ 500 } ml={ 2 } mr={ 1 } fontSize="lg" lineHeight={ 6 } color="green.500">
-                  +{ diffFormatted || Number(diff).toLocaleString() }
+                  { Number(diff) > 0 ? '+' : '-' }{ diffFormatted || Math.abs(Number(diff)).toLocaleString() }
                 </Text>
                 <Text variant="secondary" fontSize="sm">({ diffPeriod })</Text>
               </>

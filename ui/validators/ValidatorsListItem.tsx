@@ -7,6 +7,8 @@ import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import ListItemMobileGrid from 'ui/shared/ListItemMobile/ListItemMobileGrid';
 import ValidatorStatus from 'ui/shared/statusTag/ValidatorStatus';
 
+import { formatNumberValue, percentageFormatter } from './utils';
+
 interface Props {
   data: Validator;
   isLoading?: boolean;
@@ -20,21 +22,21 @@ const ValidatorsListItem = ({ data, isLoading }: Props) => {
       <ListItemMobileGrid.Label isLoading={ isLoading }>Address</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <AddressEntity
+          address={{ hash: data.validators || '' }}
           isLoading={ isLoading }
-          address={ data.address }
           truncation="constant"
         />
       </ListItemMobileGrid.Value>
 
       <ListItemMobileGrid.Label isLoading={ isLoading }>Status</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
-        <ValidatorStatus state={ data.state } isLoading={ isLoading }/>
+        <ValidatorStatus state={ data.role } isLoading={ isLoading }/>
       </ListItemMobileGrid.Value>
 
       <ListItemMobileGrid.Label isLoading={ isLoading }>Blocks</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Skeleton isLoaded={ !isLoading } display="inline-block">
-          { data.blocks_validated_count.toLocaleString() }
+          { formatNumberValue(data.commission, percentageFormatter) }
         </Skeleton>
       </ListItemMobileGrid.Value>
     </ListItemMobileGrid.Container>

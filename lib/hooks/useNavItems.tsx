@@ -46,12 +46,6 @@ export default function useNavItems(): ReturnType {
       icon: 'transactions',
       isActive: pathname === '/txs' || pathname === '/tx/[hash]',
     };
-    const userOps: NavItem | null = config.features.userOps.isEnabled ? {
-      text: 'User operations',
-      nextRoute: { pathname: '/ops' as const },
-      icon: 'user_op',
-      isActive: pathname === '/ops' || pathname === '/op/[hash]',
-    } : null;
 
     const verifiedContracts: NavItem | null =
      {
@@ -60,112 +54,47 @@ export default function useNavItems(): ReturnType {
        icon: 'verified',
        isActive: pathname === '/verified-contracts',
      };
-    const ensLookup = config.features.nameService.isEnabled ? {
-      text: 'Name services lookup',
-      nextRoute: { pathname: '/name-domains' as const },
-      icon: 'ENS',
-      isActive: pathname === '/name-domains' || pathname === '/name-domains/[name]',
-    } : null;
-    const validators = config.features.validators.isEnabled ? {
-      text: 'Top validators',
-      nextRoute: { pathname: '/validators' as const },
-      icon: 'validator',
-      isActive: pathname === '/validators',
-    } : null;
     const rollupDeposits = {
-      text: `Deposits (L1${ rightLineArrow }L2)`,
+      text: `L1${ rightLineArrow }L2 Transactions`,
       nextRoute: { pathname: '/deposits' as const },
       icon: 'arrows/south-east',
       isActive: pathname === '/deposits',
     };
     const rollupWithdrawals = {
-      text: `Withdrawals (L2${ rightLineArrow }L1)`,
+      text: `L2${ rightLineArrow }L1 Transactions`,
       nextRoute: { pathname: '/withdrawals' as const },
       icon: 'arrows/north-east',
       isActive: pathname === '/withdrawals',
     };
-    const rollupTxnBatches = {
-      text: 'Txn batches',
-      nextRoute: { pathname: '/batches' as const },
-      icon: 'txn_batches',
-      isActive: pathname === '/batches',
-    };
-    const rollupOutputRoots = {
-      text: 'Output roots',
-      nextRoute: { pathname: '/output-roots' as const },
-      icon: 'output_roots',
-      isActive: pathname === '/output-roots',
-    };
+    // const appChainTxnBatchesL1: NavItem = {
+    //   text: 'L1 States Batches',
+    //   nextRoute: { pathname: '/batches-deposits' as const },
+    //   icon: 'txn_batches',
+    //   isActive: pathname === '/batches-deposits',
+    // };
+    // const appChainTxnBatchesL2: NavItem = {
+    //   text: 'L2 States Batches',
+    //   nextRoute: { pathname: '/batches-withdrawals' as const },
+    //   icon: 'txn_batches',
+    //   isActive: pathname === '/batches-withdrawals',
+    // };
 
-    const rollupFeature = config.features.rollup;
-
-    if (rollupFeature.isEnabled && (rollupFeature.type === 'optimistic' || rollupFeature.type === 'zkEvm')) {
-      blockchainNavItems = [
-        [
-          txs,
-          rollupDeposits,
-          rollupWithdrawals,
-        ],
-        [
-          blocks,
-          rollupTxnBatches,
-          rollupFeature.type === 'optimistic' ? rollupOutputRoots : undefined,
-        ].filter(Boolean),
-        [
-          userOps,
-          topAccounts,
-          validators,
-          verifiedContracts,
-          ensLookup,
-        ].filter(Boolean),
-      ];
-    } else if (rollupFeature.isEnabled && rollupFeature.type === 'shibarium') {
-      blockchainNavItems = [
-        [
-          txs,
-          rollupDeposits,
-          rollupWithdrawals,
-        ],
-        [
-          blocks,
-          userOps,
-          topAccounts,
-          verifiedContracts,
-          ensLookup,
-        ].filter(Boolean),
-      ];
-    } else if (rollupFeature.isEnabled && rollupFeature.type === 'zkSync') {
-      blockchainNavItems = [
-        [
-          txs,
-          userOps,
-          blocks,
-          rollupTxnBatches,
-        ].filter(Boolean),
-        [
-          topAccounts,
-          validators,
-          verifiedContracts,
-          ensLookup,
-        ].filter(Boolean),
-      ];
-    } else {
-      blockchainNavItems = [
+    blockchainNavItems = blockchainNavItems = [
+      [
         txs,
-        userOps,
+        rollupDeposits,
+        rollupWithdrawals,
+      ],
+      [
         blocks,
+        // appChainTxnBatchesL1, // L1 batches
+        // appChainTxnBatchesL2, // L2 batches
+      ],
+      [
         topAccounts,
-        validators,
         verifiedContracts,
-        ensLookup,
-        config.features.beaconChain.isEnabled && {
-          text: 'Withdrawals',
-          nextRoute: { pathname: '/withdrawals' as const },
-          icon: 'arrows/north-east',
-          isActive: pathname === '/withdrawals',
-        },
-      ].filter(Boolean);
-    }
+      ].filter(Boolean),
+    ];
 
     const apiNavItems: Array<NavItem> = [
       config.features.restApiDocs.isEnabled ? {
@@ -198,6 +127,12 @@ export default function useNavItems(): ReturnType {
         icon: 'globe-b',
         isActive: blockchainNavItems.flat().some(item => isInternalItem(item) && item.isActive),
         subItems: blockchainNavItems,
+      },
+      {
+        text: 'Validator',
+        nextRoute: { pathname: '/validators' as const },
+        icon: 'RPC',
+        isActive: pathname.startsWith('/validators'),
       },
       {
         text: 'Tokens',

@@ -10,7 +10,7 @@ const ValidatorsList = ({ data, isLoading }: { data: Array<Validator>; isLoading
     <Box>
       { data.map((item, index) => (
         <ValidatorsListItem
-          key={ item.address.hash + (isLoading ? index : '') }
+          key={ String(item.rank) + (isLoading ? index : '') }
           data={ item }
           isLoading={ isLoading }
         />

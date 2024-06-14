@@ -21,6 +21,10 @@ const Withdrawals = dynamic(() => {
     return import('ui/pages/ZkEvmL2Withdrawals');
   }
 
+  if (rollupFeature.isEnabled && rollupFeature.type === 'platon-appchain') {
+    return import('ui/pages/PlatonL2Withdrawals');
+  }
+
   if (beaconChainFeature.isEnabled) {
     return import('ui/pages/BeaconChainWithdrawals');
   }

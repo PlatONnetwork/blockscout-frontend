@@ -1,16 +1,37 @@
-import type { ValidatorsSortingValue, ValidatorsSortingField } from 'types/api/validators';
+import type { ValidatorsSortingValue, ValidatorsSortingField, Validator } from 'types/api/validators';
 
-import type { Option } from 'ui/shared/sort/Sort';
-
-export const SORT_OPTIONS: Array<Option<ValidatorsSortingValue>> = [
-  { title: 'Default', id: undefined },
-  { title: 'Status descending', id: 'state-desc' },
-  { title: 'Status ascending', id: 'state-asc' },
-  { title: 'Blocks validated descending', id: 'blocks_validated-desc' },
-  { title: 'Blocks validated ascending', id: 'blocks_validated-asc' },
-];
+import compareBns from 'lib/bigint/compareBns';
 
 export const SORT_SEQUENCE: Record<ValidatorsSortingField, Array<ValidatorsSortingValue | undefined>> = {
-  state: [ 'state-desc', 'state-asc', undefined ],
-  blocks_validated: [ 'blocks_validated-desc', 'blocks_validated-asc', undefined ],
+  commission: [ 'commission-desc', 'commission-asc', undefined ],
+  expect_apr: [ 'expect_apr-desc', 'expect_apr-asc', undefined ],
+  block_rate: [ 'block_rate-desc', 'block_rate-asc', undefined ],
 };
+
+export const formatNumberValue = (value: string| number | undefined | null, formatter?: (value: string| number) => string) => {
+  return value !== undefined && value !== null && !Number.isNaN(Number(value)) ? (formatter?.(value) || value) : '-';
+};
+
+export const toLocaleStringFormatter = (value: string | number) => Number(value).toLocaleString();
+export const percentageFormatter = (value: string| number) => (Number(value) * 100).toFixed(2) + '%';
+
+export default function sortValidators(sorting: ValidatorsSortingValue | undefined) {
+  return function sortingFn(item1: Validator, item2: Validator) {
+    switch (sorting) {
+      case 'commission-desc':
+        return compareBns(item2.commission || 0, item1.commission || 0);
+      case 'commission-asc':
+        return compareBns(item1.commission || 0, item2.commission || 0);
+      case 'expect_apr-desc':
+        return compareBns(item2.expect_apr || 0, item1.expect_apr || 0);
+      case 'expect_apr-asc':
+        return compareBns(item1.expect_apr || 0, item2.expect_apr || 0);
+      case 'block_rate-desc':
+        return compareBns(item2.block_rate || 0, item1.block_rate || 0);
+      case 'block_rate-asc':
+        return compareBns(item1.block_rate || 0, item2.block_rate || 0);
+      default:
+        return 0;
+    }
+  };
+}

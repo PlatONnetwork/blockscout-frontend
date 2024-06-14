@@ -5,6 +5,7 @@ import type { AdBannerProviders } from 'types/client/adProviders';
 import type { Route } from 'nextjs-routes';
 
 import config from 'configs/app';
+import { isPlatonAppChain } from 'configs/app/features/rollup';
 import isNeedProxy from 'lib/api/isNeedProxy';
 const rollupFeature = config.features.rollup;
 const adBannerFeature = config.features.adsBanner;
@@ -67,7 +68,8 @@ export const verifiedAddresses: GetServerSideProps<Props> = async(context) => {
 };
 
 export const deposits: GetServerSideProps<Props> = async(context) => {
-  if (!(rollupFeature.isEnabled && (rollupFeature.type === 'optimistic' || rollupFeature.type === 'shibarium' || rollupFeature.type === 'zkEvm'))) {
+  if (!(rollupFeature.isEnabled && (rollupFeature.type === 'optimistic' || rollupFeature.type === 'shibarium' ||
+  rollupFeature.type === 'zkEvm' || rollupFeature.type === 'platon-appchain'))) {
     return {
       notFound: true,
     };
@@ -79,7 +81,8 @@ export const deposits: GetServerSideProps<Props> = async(context) => {
 export const withdrawals: GetServerSideProps<Props> = async(context) => {
   if (
     !config.features.beaconChain.isEnabled &&
-    !(rollupFeature.isEnabled && (rollupFeature.type === 'optimistic' || rollupFeature.type === 'shibarium' || rollupFeature.type === 'zkEvm'))
+    !(rollupFeature.isEnabled && (rollupFeature.type === 'optimistic' || rollupFeature.type === 'shibarium' ||
+     rollupFeature.type === 'zkEvm' || rollupFeature.type === 'platon-appchain'))
   ) {
     return {
       notFound: true,
@@ -192,6 +195,16 @@ export const accounts: GetServerSideProps<Props> = async(context) => {
 
 export const userOps: GetServerSideProps<Props> = async(context) => {
   if (!config.features.userOps.isEnabled) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return base(context);
+};
+
+export const platonAppchain: GetServerSideProps<Props> = async(context) => {
+  if (!isPlatonAppChain) {
     return {
       notFound: true,
     };

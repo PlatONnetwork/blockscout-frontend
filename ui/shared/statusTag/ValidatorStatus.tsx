@@ -1,22 +1,22 @@
 import React from 'react';
 
-import type { Validator } from 'types/api/validators';
+import { ValidatorRole, type Validator } from 'types/api/validators';
 
-import StatusTag from './StatusTag';
+import Tag from 'ui/shared/chakra/Tag';
 
 interface Props {
-  state: Validator['state'];
+  state: Validator['role'];
   isLoading?: boolean;
 }
 
 const ValidatorStatus = ({ state, isLoading }: Props) => {
   switch (state) {
-    case 'active':
-      return <StatusTag type="ok" text="Active" isLoading={ isLoading }/>;
-    case 'probation':
-      return <StatusTag type="pending" text="Probation" isLoading={ isLoading }/>;
-    case 'inactive':
-      return <StatusTag type="error" text="Inactive" isLoading={ isLoading }/>;
+    case ValidatorRole.ACTIVE:
+      return <Tag isLoading={ isLoading } colorScheme="green">Active</Tag>;
+    case ValidatorRole.VERIFYING:
+      return <Tag isLoading={ isLoading } colorScheme="orange">Verifying</Tag>;
+    case ValidatorRole.CANDIDATE:
+      return <Tag isLoading={ isLoading } colorScheme="purple">Candidate</Tag>;
   }
 };
 

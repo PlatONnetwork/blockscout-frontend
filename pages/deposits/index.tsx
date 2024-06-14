@@ -20,6 +20,10 @@ const Deposits = dynamic(() => {
     return import('ui/pages/ZkEvmL2Deposits');
   }
 
+  if (rollupFeature.isEnabled && rollupFeature.type === 'platon-appchain') {
+    return import('ui/pages/PlatonL2Deposits');
+  }
+
   throw new Error('Deposits feature is not enabled.');
 }, { ssr: false });
 

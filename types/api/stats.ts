@@ -18,6 +18,12 @@ export type HomeStats = {
   rootstock_locked_btc?: string | null;
   last_output_root_size?: string | null;
   secondary_coin_price?: string | null;
+  total_supply: number;
+  validator_count: number;
+  total_assets_staked: string;
+  next_l2_state_batch_block: number;
+  staked_rate: string;
+  circulating: string;
 }
 
 export type GasPrices = {
