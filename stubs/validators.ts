@@ -1,4 +1,4 @@
-import type { Validator, ValidatorsCountersResponse } from 'types/api/validators';
+import type { HistoricalValidator, Validator, ValidatorsCountersResponse } from 'types/api/validators';
 
 export const VALIDATOR: Validator = {
   block_rate: null,
@@ -20,4 +20,13 @@ export const VALIDATORS_COUNTERS: ValidatorsCountersResponse = {
   total_bonded_24_hours: '3000000000',
   validators: 3,
   validators_24_hours: 3,
+};
+
+export const VALIDATOR_HISTORY: HistoricalValidator = {
+  event: '21231',
+  exit_block: 1222,
+  no: 0,
+  status: 0,
+  exit_timestamp: '2020-10-17T22:27:00.000000Z',
+  validators: '0x1dd26dfb60b996fd5d5152af723949971d9119ee',
 };

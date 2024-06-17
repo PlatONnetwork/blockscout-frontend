@@ -96,7 +96,7 @@ import type { TxInterpretationResponse } from 'types/api/txInterpretation';
 import type { TTxsFilters, TTxsWithBlobsFilters } from 'types/api/txsFilters';
 import type { TxStateChanges } from 'types/api/txStateChanges';
 import type { UserOpsResponse, UserOp, UserOpsFilters, UserOpsAccount } from 'types/api/userOps';
-import type { ValidatorsCountersResponse, ValidatorsFilters, ValidatorsResponse, ValidatorsSorting } from 'types/api/validators';
+import type { ValidatorsCountersResponse, ValidatorsFilters, ValidatorsHistoryResponse, ValidatorsResponse, ValidatorsSorting } from 'types/api/validators';
 import type { VerifiedContractsSorting } from 'types/api/verifiedContracts';
 import type { VisualizedContract } from 'types/api/visualization';
 import type { WithdrawalsResponse, WithdrawalsCounters } from 'types/api/withdrawals';
@@ -765,6 +765,9 @@ export const RESOURCES = {
   validators_counters: {
     path: '/api/v2/validators/stats',
   },
+  validators_history: {
+    path: '/api/v2/validators/history',
+  },
 
   // BLOBS
   blob: {
@@ -869,7 +872,7 @@ export type PaginatedResources = 'blocks' | 'block_txs' |
 'zksync_l2_txn_batches' | 'zksync_l2_txn_batch_txs' |
 'withdrawals' | 'address_withdrawals' | 'block_withdrawals' |
 'watchlist' | 'private_tags_address' | 'private_tags_tx' |
-'domains_lookup' | 'addresses_lookup' | 'user_ops' | 'validators' | 'noves_address_history' |
+'domains_lookup' | 'addresses_lookup' | 'user_ops' | 'validators' | 'validators_history' | 'noves_address_history' |
 'platon_l2_deposits' | 'platon_l2_withdrawals';
 
 export type PaginatedResponse<Q extends PaginatedResources> = ResourcePayload<Q>;
@@ -986,6 +989,7 @@ Q extends 'marketplace_dapps' ? Array<MarketplaceAppOverview> :
 Q extends 'marketplace_dapp' ? MarketplaceAppOverview :
 Q extends 'validators' ? ValidatorsResponse :
 Q extends 'validators_counters' ? ValidatorsCountersResponse :
+Q extends 'validators_history' ? ValidatorsHistoryResponse :
 Q extends 'shibarium_withdrawals' ? ShibariumWithdrawalsResponse :
 Q extends 'shibarium_deposits' ? ShibariumDepositsResponse :
 Q extends 'shibarium_withdrawals_count' ? number :

@@ -31,6 +31,20 @@ export interface ValidatorsCountersResponse {
   epoch_staking_reward: string;
 }
 
+export interface HistoricalValidator {
+  event: string;
+  exit_block: number;
+  no: number;
+  status: number;
+  exit_timestamp: string;
+  validators: string;
+}
+
+export interface ValidatorsHistoryResponse {
+  items: Array<HistoricalValidator>;
+  next_page_params: null;
+}
+
 export interface ValidatorsFilters {
   q: string;
 }

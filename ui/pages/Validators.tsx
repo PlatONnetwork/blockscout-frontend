@@ -96,7 +96,7 @@ const Validators = () => {
 
   return (
     <Box>
-      <PageTitle title="Validators" withTextAd/>
+      <PageTitle title="Validators"/>
       <ValidatorsCounters/>
       <RoutedTabs
         tabs={ tabs }
@@ -110,7 +110,7 @@ const Validators = () => {
               placeholder="Search by validator name or address"
               initialValue={ searchTerm }
             />
-            <Link href="/history-validators">Historical Validators</Link>
+            <Link href="/validators/history">Historical Validators</Link>
           </Flex>
         ) }
         onTabChange={ onTabChange }

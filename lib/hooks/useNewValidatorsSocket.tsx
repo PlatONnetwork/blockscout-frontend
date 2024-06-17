@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import { useRouter, type NextRouter } from 'next/router';
 import React from 'react';
 
 import useGradualIncrement from 'lib/hooks/useGradualIncrement';
@@ -7,13 +7,26 @@ import useSocketMessage from 'lib/socket/useSocketMessage';
 
 type Event = 'all_validator' | 'active_validator' | 'candidate_validator'
 
+const getValidatorType = (router: NextRouter) => {
+  if (!router.pathname.includes('/validators')) {
+    return;
+  }
+  if (router.pathname.includes('history')) {
+    return 'history';
+  }
+  return router.query?.tab || 'all' ;
+
+};
+
 export default function useNewValidatorsSocket() {
   const router = useRouter();
+
   const [ num, setNum ] = useGradualIncrement(0);
   const [ socketAlert, setSocketAlert ] = React.useState('');
-  const { tab = 'all' } = router.query ;
-  const topic = `platon_appchain_l2_validator:${ tab }_validator`;
-  const event = `${ tab }_validator` as Event;
+
+  const validatorType = getValidatorType(router);
+  const topic = `platon_appchain_l2_validator:${ validatorType }_validator`;
+  const event = `${ validatorType }_validator` as Event;
 
   const handleNewValidatorMessage = React.useCallback((response: number) => {
     setNum(response);
