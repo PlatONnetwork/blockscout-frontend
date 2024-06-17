@@ -4,7 +4,7 @@ import React from 'react';
 import type { HistoricalValidator } from 'types/api/validators';
 
 import dayjs from 'lib/date/dayjs';
-import AddressEntity from 'ui/shared/entities/address/AddressEntity';
+import ValidatorEntity from 'ui/shared/entities/validator/ValidatorEntity';
 import ValidatorHistoryStatus from 'ui/shared/statusTag/ValidatorHistoryStatus';
 
 interface Props {
@@ -21,10 +21,10 @@ const ValidatorsHistoryTableItem = ({ data, isLoading }: Props) => {
         </Skeleton>
       </Td>
       <Td verticalAlign="middle">
-        <AddressEntity
-          address={{ hash: data.validators || '' }}
+        <ValidatorEntity
+          hash={ data.validators || '' }
           isLoading={ isLoading }
-          truncation="constant"
+          truncation="constant_long"
         />
       </Td>
       <Td verticalAlign="middle">

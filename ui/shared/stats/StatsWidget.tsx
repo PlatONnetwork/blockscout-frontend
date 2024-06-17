@@ -72,14 +72,14 @@ const StatsWidget = ({ label, value, valuePrefix, valuePostfix, isLoading, hint,
             { valuePrefix && <chakra.span fontWeight={ 500 } fontSize="lg" lineHeight={ 6 } whiteSpace="pre">{ valuePrefix }</chakra.span> }
             <TruncatedValue isLoading={ isLoading } fontWeight={ 500 } fontSize="lg" lineHeight={ 6 } value={ value }/>
             { valuePostfix && <chakra.span fontWeight={ 500 } fontSize="lg" lineHeight={ 6 } whiteSpace="pre">{ valuePostfix }</chakra.span> }
-            { diff && (
+            { !Number.isNaN(Number(diff)) ? (
               <>
                 <Text fontWeight={ 500 } ml={ 2 } mr={ 1 } fontSize="lg" lineHeight={ 6 } color="green.500">
-                  { Number(diff) > 0 ? '+' : '-' }{ diffFormatted || Math.abs(Number(diff)).toLocaleString() }
+                  { Number(diff) >= 0 ? '+' : '-' }{ diffFormatted || Math.abs(Number(diff)).toLocaleString() }
                 </Text>
                 <Text variant="secondary" fontSize="sm">({ diffPeriod })</Text>
               </>
-            ) }
+            ) : null }
             { period && <Text variant="secondary" fontSize="xs" ml={ 1 }>({ period })</Text> }
           </Skeleton>
         </Box>

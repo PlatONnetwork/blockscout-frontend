@@ -9,14 +9,19 @@ import useIsMobile from 'lib/hooks/useIsMobile';
 import getQueryParamString from 'lib/router/getQueryParamString';
 import { generateListStub } from 'stubs/utils';
 import { VALIDATOR } from 'stubs/validators';
-import { Link } from 'ui/shared/entities/base/components';
 import FilterInput from 'ui/shared/filters/FilterInput';
+import LinkInternal from 'ui/shared/LinkInternal';
 import PageTitle from 'ui/shared/Page/PageTitle';
 import useQueryWithPages from 'ui/shared/pagination/useQueryWithPages';
 import RoutedTabs from 'ui/shared/Tabs/RoutedTabs';
 import ValidatorsCounters from 'ui/validators/ValidatorsCounters';
 import ValidatorsWithFrontendSorting from 'ui/validators/ValidatorsWithFrontendSorting';
-
+const TAB_LIST_PROPS = {
+  marginBottom: 0,
+  pt: 6,
+  pb: 3,
+  marginTop: -5,
+};
 const Validators = () => {
   const router = useRouter();
   const [ searchTerm, setSearchTerm ] = React.useState(getQueryParamString(router.query.q) || undefined);
@@ -96,10 +101,11 @@ const Validators = () => {
 
   return (
     <Box>
-      <PageTitle title="Validators"/>
+      <PageTitle title="Validators" withTextAd/>
       <ValidatorsCounters/>
       <RoutedTabs
         tabs={ tabs }
+        tabListProps={ TAB_LIST_PROPS }
         rightSlotProps={ isMobile ? null : { ml: '10px', flex: 1 } }
         rightSlot={ isMobile ? null : (
           <Flex width="100%" justifyContent="space-between">
@@ -110,7 +116,7 @@ const Validators = () => {
               placeholder="Search by validator name or address"
               initialValue={ searchTerm }
             />
-            <Link href="/validators/history">Historical Validators</Link>
+            <LinkInternal href="/validators/history" fontWeight={ 600 }>Historical Validators</LinkInternal>
           </Flex>
         ) }
         onTabChange={ onTabChange }

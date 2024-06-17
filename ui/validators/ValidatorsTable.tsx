@@ -5,7 +5,6 @@ import React from 'react';
 import type { Validator, ValidatorsSorting, ValidatorsSortingField, ValidatorsSortingValue } from 'types/api/validators';
 
 import { AddressHighlightProvider } from 'lib/contexts/addressHighlight';
-import { ACTION_BAR_HEIGHT_DESKTOP } from 'ui/shared/ActionBar';
 import IconSvg from 'ui/shared/IconSvg';
 import * as SocketNewItemsNotice from 'ui/shared/SocketNewItemsNotice';
 import getNextSortValue from 'ui/shared/sort/getNextSortValue';
@@ -34,7 +33,7 @@ const ValidatorsTable = ({ data, sort, setSorting, isLoading, socketInfoAlert, s
   return (
     <AddressHighlightProvider>
       <Table variant="simple" minWidth="1040px" size="sm">
-        <Thead top={ ACTION_BAR_HEIGHT_DESKTOP }>
+        <Thead top={ 76 }>
           <Tr>
             <Th width={ 100 }>Rank</Th>
             <Th width="20%">Validators</Th>

@@ -53,6 +53,7 @@ declare module "nextjs-routes" {
     | DynamicRoute<"/tx/[hash]", { "hash": string }>
     | StaticRoute<"/txs">
     | DynamicRoute<"/txs/kettle/[hash]", { "hash": string }>
+    | DynamicRoute<"/validator/[hash]", { "hash": string }>
     | StaticRoute<"/validators/history">
     | StaticRoute<"/validators">
     | StaticRoute<"/verified-contracts">

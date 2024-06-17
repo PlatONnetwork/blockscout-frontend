@@ -3,7 +3,7 @@ import React from 'react';
 
 import type { Validator } from 'types/api/validators';
 
-import AddressEntity from 'ui/shared/entities/address/AddressEntity';
+import ValidatorEntity from 'ui/shared/entities/validator/ValidatorEntity';
 import ValidatorStatus from 'ui/shared/statusTag/ValidatorStatus';
 
 import { formatNumberValue, percentageFormatter, toLocaleStringFormatter } from './utils';
@@ -22,10 +22,11 @@ const ValidatorsTableItem = ({ data, isLoading }: Props) => {
         </Skeleton>
       </Td>
       <Td verticalAlign="middle">
-        <AddressEntity
-          address={{ hash: data.validators || '' }}
+        <ValidatorEntity
+          hash={ data.validators || '' }
           isLoading={ isLoading }
-          truncation="constant"
+          truncation="constant_long"
+          noCopy={ false }
         />
       </Td>
       <Td verticalAlign="middle">
