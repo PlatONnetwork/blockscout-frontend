@@ -39,7 +39,9 @@ const ValidatorsHistoryTableItem = ({ data, isLoading }: Props) => {
         </Skeleton>
       </Td>
       <Td verticalAlign="middle">
-        { data.event }
+        <Skeleton isLoaded={ !isLoading } display="inline-block">
+          { data.event }
+        </Skeleton>
       </Td>
     </Tr>
   );

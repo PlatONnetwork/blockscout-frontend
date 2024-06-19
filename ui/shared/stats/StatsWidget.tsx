@@ -10,7 +10,7 @@ import TruncatedValue from 'ui/shared/TruncatedValue';
 
 type Props = {
   label: string;
-  value: string;
+  value: ReactNode;
   valuePrefix?: string;
   valuePostfix?: string;
   hint?: ReactNode;

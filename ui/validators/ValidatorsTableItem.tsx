@@ -5,8 +5,7 @@ import type { Validator } from 'types/api/validators';
 
 import ValidatorEntity from 'ui/shared/entities/validator/ValidatorEntity';
 import ValidatorStatus from 'ui/shared/statusTag/ValidatorStatus';
-
-import { formatNumberValue, percentageFormatter, toLocaleStringFormatter } from './utils';
+import { formatNumberValue, percentageFormatter, toLocaleStringFormatter } from 'ui/shared/validator/utils';
 
 interface Props {
   data: Validator;

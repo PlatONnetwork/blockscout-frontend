@@ -1,5 +1,6 @@
 import type { PlacementWithLogical } from '@chakra-ui/react';
 import { Skeleton, chakra } from '@chakra-ui/react';
+import type { ReactNode } from 'react';
 import React from 'react';
 
 import TruncatedTextTooltip from 'ui/shared/TruncatedTextTooltip';
@@ -7,7 +8,7 @@ import TruncatedTextTooltip from 'ui/shared/TruncatedTextTooltip';
 interface Props {
   className?: string;
   isLoading?: boolean;
-  value: string;
+  value: ReactNode;
   tooltipPlacement?: PlacementWithLogical;
 }
 

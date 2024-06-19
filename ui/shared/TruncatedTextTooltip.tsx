@@ -1,6 +1,7 @@
 import type { PlacementWithLogical } from '@chakra-ui/react';
 import { Tooltip } from '@chakra-ui/react';
 import debounce from 'lodash/debounce';
+import type { ReactNode } from 'react';
 import React from 'react';
 import useFontFaceObserver from 'use-font-face-observer';
 
@@ -8,7 +9,7 @@ import { BODY_TYPEFACE } from 'theme/foundations/typography';
 
 interface Props {
   children: React.ReactNode;
-  label: string;
+  label: ReactNode;
   placement?: PlacementWithLogical;
 }
 

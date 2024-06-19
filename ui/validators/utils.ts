@@ -8,13 +8,6 @@ export const SORT_SEQUENCE: Record<ValidatorsSortingField, Array<ValidatorsSorti
   block_rate: [ 'block_rate-desc', 'block_rate-asc', undefined ],
 };
 
-export const formatNumberValue = (value: string| number | undefined | null, formatter?: (value: string| number) => string) => {
-  return value !== undefined && value !== null && !Number.isNaN(Number(value)) ? (formatter?.(value) || value) : '-';
-};
-
-export const toLocaleStringFormatter = (value: string | number) => Number(value).toLocaleString();
-export const percentageFormatter = (value: string| number) => (Number(value) * 100).toFixed(2) + '%';
-
 export default function sortValidators(sorting: ValidatorsSortingValue | undefined) {
   return function sortingFn(item1: Validator, item2: Validator) {
     switch (sorting) {

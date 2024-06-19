@@ -45,6 +45,27 @@ export interface ValidatorsHistoryResponse {
   next_page_params: null;
 }
 
+export interface ValidatorResponse {
+  owner_address: string;
+  commission: number;
+  website: string | null;
+  detail: string | null;
+  total_bonded: string;
+  self_stakes: string;
+  unbonding: string;
+  pending_withdrawal: string;
+  delegations: string;
+  delegations_proportion: number;
+  blocks: number;
+  block_rate: number;
+  expect_apr: string | null;
+  total_rewards: string;
+  validator_claimable_rewards: string;
+  validator_rewards: string;
+  delegator_rewards: string;
+  role: ValidatorRole;
+}
+
 export interface ValidatorsFilters {
   q: string;
 }

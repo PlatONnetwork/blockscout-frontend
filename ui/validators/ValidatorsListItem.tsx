@@ -6,8 +6,7 @@ import type { Validator } from 'types/api/validators';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import ListItemMobileGrid from 'ui/shared/ListItemMobile/ListItemMobileGrid';
 import ValidatorStatus from 'ui/shared/statusTag/ValidatorStatus';
-
-import { formatNumberValue, percentageFormatter } from './utils';
+import { formatNumberValue, percentageFormatter } from 'ui/shared/validator/utils';
 
 interface Props {
   data: Validator;

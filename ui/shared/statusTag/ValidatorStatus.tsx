@@ -5,7 +5,7 @@ import { ValidatorRole, type Validator } from 'types/api/validators';
 import Tag from 'ui/shared/chakra/Tag';
 
 interface Props {
-  state: Validator['role'];
+  state?: Validator['role'];
   isLoading?: boolean;
 }
 
@@ -17,6 +17,8 @@ const ValidatorStatus = ({ state, isLoading }: Props) => {
       return <Tag isLoading={ isLoading } colorScheme="orange">Verifying</Tag>;
     case ValidatorRole.CANDIDATE:
       return <Tag isLoading={ isLoading } colorScheme="purple">Candidate</Tag>;
+    default:
+      return null;
   }
 };
 

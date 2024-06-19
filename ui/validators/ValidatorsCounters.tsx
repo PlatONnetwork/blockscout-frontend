@@ -1,10 +1,11 @@
-import { Box, HStack, Text, VStack, useColorModeValue } from '@chakra-ui/react';
-import React from 'react';
+import { Box } from '@chakra-ui/react';
+import React, { useMemo } from 'react';
 
 import config from 'configs/app';
 import useApiQuery from 'lib/api/useApiQuery';
 import { VALIDATORS_COUNTERS } from 'stubs/validators';
 import StatsWidget from 'ui/shared/stats/StatsWidget';
+import StatsHint from 'ui/shared/validator/StatsHint';
 
 const ValidatorsCounters = () => {
   const countersQuery = useApiQuery('validators_counters', {
@@ -12,7 +13,15 @@ const ValidatorsCounters = () => {
       placeholderData: VALIDATORS_COUNTERS,
     },
   });
-  const tooltipTextColor = useColorModeValue('#fff', 'gray.900');
+
+  const hints = useMemo(() => countersQuery.data ? [ {
+    label: 'BlockReward',
+    value: countersQuery.data.block_reward + ' ' + config.chain.currency.symbol,
+  }, {
+    label: 'EpochStakingReward',
+    value: countersQuery.data.epoch_staking_reward + ' ' + config.chain.currency.symbol,
+  } ] :
+    null, [ countersQuery ]);
 
   if (!countersQuery.data) {
     return null;
@@ -39,16 +48,7 @@ const ValidatorsCounters = () => {
         value={ countersQuery.data.reward_pool }
         isLoading={ countersQuery.isPlaceholderData }
         hint={ (
-          <VStack p="15px" gap="10px" alignItems="flex-start">
-            <HStack>
-              <Text color={ tooltipTextColor }>BlockReward</Text>
-              <Text color={ tooltipTextColor }>{ countersQuery.data.block_reward + ' ' + config.chain.currency.symbol }</Text>
-            </HStack>
-            <HStack>
-              <Text color={ tooltipTextColor }>EpochStakingReward</Text>
-              <Text color={ tooltipTextColor }>{ countersQuery.data.epoch_staking_reward + ' ' + config.chain.currency.symbol }</Text>
-            </HStack>
-          </VStack>
+          <StatsHint list={ hints }/>
         ) }
       />
     </Box>

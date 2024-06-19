@@ -1,4 +1,4 @@
-import { Flex, chakra } from '@chakra-ui/react';
+import { Flex, Skeleton, chakra } from '@chakra-ui/react';
 import _omit from 'lodash/omit';
 import React from 'react';
 
@@ -33,6 +33,9 @@ const Icon = (props: IconProps) => {
     ...getIconProps(props.iconSize),
     marginRight: 2,
   };
+  if (props.isLoading) {
+    return <Skeleton { ...styles } borderRadius="full" flexShrink={ 0 }/>;
+  }
   return (
     <Flex marginRight={ styles.marginRight }>
       <AddressIdenticon
