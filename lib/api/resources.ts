@@ -97,6 +97,13 @@ import type { TTxsFilters, TTxsWithBlobsFilters } from 'types/api/txsFilters';
 import type { TxStateChanges } from 'types/api/txStateChanges';
 import type { UserOpsResponse, UserOp, UserOpsFilters, UserOpsAccount } from 'types/api/userOps';
 import type {
+  ValidatorActionResponse,
+  ValidatorBlocksResponse,
+  ValidatorDelegatorResponse,
+  ValidatorFilters,
+  ValidatorStakingResponse,
+} from 'types/api/validator';
+import type {
   ValidatorResponse,
   ValidatorsCountersResponse,
   ValidatorsFilters,
@@ -780,6 +787,23 @@ export const RESOURCES = {
     pathParams: [ 'hash' as const ],
   },
 
+  validator_staking: {
+    path: '/api/v2/validators/staking',
+    filterFields: [ 'validator_hash' as const ],
+  },
+  validator_blocks: {
+    path: '/api/v2/validators/blocks-produced',
+    filterFields: [ 'validator_hash' as const ],
+  },
+  validator_action: {
+    path: '/api/v2/validators/validator-action',
+    filterFields: [ 'validator_hash' as const ],
+  },
+  validator_delegator: {
+    path: '/api/v2/validators/delegator',
+    filterFields: [ 'validator_hash' as const ],
+  },
+
   // BLOBS
   blob: {
     path: '/api/v2/blobs/:hash',
@@ -884,7 +908,8 @@ export type PaginatedResources = 'blocks' | 'block_txs' |
 'withdrawals' | 'address_withdrawals' | 'block_withdrawals' |
 'watchlist' | 'private_tags_address' | 'private_tags_tx' |
 'domains_lookup' | 'addresses_lookup' | 'user_ops' | 'validators' | 'validators_history' | 'noves_address_history' |
-'platon_l2_deposits' | 'platon_l2_withdrawals';
+'platon_l2_deposits' | 'platon_l2_withdrawals' |
+'validator_staking' | 'validator_blocks' | 'validator_action' | 'validator_delegator';
 
 export type PaginatedResponse<Q extends PaginatedResources> = ResourcePayload<Q>;
 
@@ -1002,6 +1027,10 @@ Q extends 'validators' ? ValidatorsResponse :
 Q extends 'validators_counters' ? ValidatorsCountersResponse :
 Q extends 'validator' ? ValidatorResponse :
 Q extends 'validators_history' ? ValidatorsHistoryResponse :
+Q extends 'validator_staking' ? ValidatorStakingResponse :
+Q extends 'validator_blocks' ? ValidatorBlocksResponse :
+Q extends 'validator_action' ? ValidatorActionResponse :
+Q extends 'validator_delegator' ? ValidatorDelegatorResponse :
 Q extends 'shibarium_withdrawals' ? ShibariumWithdrawalsResponse :
 Q extends 'shibarium_deposits' ? ShibariumDepositsResponse :
 Q extends 'shibarium_withdrawals_count' ? number :
@@ -1065,6 +1094,10 @@ Q extends 'addresses_lookup' ? EnsAddressLookupFilters :
 Q extends 'domains_lookup' ? EnsDomainLookupFilters :
 Q extends 'user_ops' ? UserOpsFilters :
 Q extends 'validators' ? ValidatorsFilters :
+Q extends 'validator_staking' ? ValidatorFilters :
+Q extends 'validator_blocks' ? ValidatorFilters :
+Q extends 'validator_action' ? ValidatorFilters :
+Q extends 'validator_delegator' ? ValidatorFilters :
 never;
 /* eslint-enable @typescript-eslint/indent */
 

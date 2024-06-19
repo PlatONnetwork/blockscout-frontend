@@ -1,6 +1,6 @@
 import { Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import useApiQuery from 'lib/api/useApiQuery';
 import { useAppContext } from 'lib/contexts/app';
@@ -8,19 +8,14 @@ import throwOnAbsentParamError from 'lib/errors/throwOnAbsentParamError';
 import throwOnResourceLoadError from 'lib/errors/throwOnResourceLoadError';
 import getQueryParamString from 'lib/router/getQueryParamString';
 import shortenString from 'lib/shortenString';
-import { VALIDATOR_DETAIL } from 'stubs/validators';
+import { VALIDATOR_DETAIL } from 'stubs/validator';
 import AddressQrCode from 'ui/address/details/AddressQrCode';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import PageTitle from 'ui/shared/Page/PageTitle';
 import ValidatorStatus from 'ui/shared/statusTag/ValidatorStatus';
-import RoutedTabs from 'ui/shared/Tabs/RoutedTabs';
-import TabsSkeleton from 'ui/shared/Tabs/TabsSkeleton';
-import ValidatorAction from 'ui/validator/ValidatorAction';
-import ValidatorBlocksProduced from 'ui/validator/ValidatorBlocksProduced';
-import ValidatorDelegator from 'ui/validator/ValidatorDelegator';
 import ValidatorDetails from 'ui/validator/ValidatorDetails';
-import ValidatorStakingEvents from 'ui/validator/ValidatorStakingEvents';
 import ValidatorStats from 'ui/validator/ValidatorStats';
+import ValidatorTabs from 'ui/validator/ValidatorTabs';
 
 const Validator = () => {
   const router = useRouter();
@@ -35,29 +30,6 @@ const Validator = () => {
       placeholderData: VALIDATOR_DETAIL,
     },
   });
-
-  const tabs = useMemo(() => ([
-    {
-      id: 'staking_events',
-      title: 'Staking Events',
-      component: <ValidatorStakingEvents/>,
-    },
-    {
-      id: 'blocks_produced',
-      title: 'Blocks Produced',
-      component: <ValidatorBlocksProduced/>,
-    },
-    {
-      id: 'validator_action',
-      title: 'Validator Action',
-      component: <ValidatorAction/>,
-    },
-    {
-      id: 'validator_delegator',
-      title: 'Validator Delegator',
-      component: <ValidatorDelegator/>,
-    },
-  ]), []);
 
   throwOnAbsentParamError(hash);
   throwOnResourceLoadError(validatorQuery);
@@ -103,9 +75,7 @@ const Validator = () => {
       />
       <ValidatorDetails hash={ hash } query={ validatorQuery }/>
       <ValidatorStats hash={ hash } query={ validatorQuery }/>
-      {
-        isLoading ? <TabsSkeleton tabs={ tabs }/> : <RoutedTabs tabs={ tabs }/>
-      }
+      <ValidatorTabs isLoading={ isLoading } hash={ hash }/>
     </>
   );
 };

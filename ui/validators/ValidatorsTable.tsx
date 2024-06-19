@@ -36,8 +36,8 @@ const ValidatorsTable = ({ data, sort, setSorting, isLoading, socketInfoAlert, s
         <Thead top={ 76 }>
           <Tr>
             <Th width={ 100 }>Rank</Th>
-            <Th width="20%">Validators</Th>
-            <Th width="20%">Status</Th>
+            <Th width="30%" minWidth={ 240 }>Validators</Th>
+            <Th width="15%">Status</Th>
             <Th width="15%">
               <Link
                 display="flex"

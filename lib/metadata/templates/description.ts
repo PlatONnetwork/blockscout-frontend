@@ -59,6 +59,9 @@ const TEMPLATE_MAP: Record<Route['pathname'], string> = {
   '/api/healthz': DEFAULT_TEMPLATE,
   '/auth/auth0': DEFAULT_TEMPLATE,
   '/auth/unverified-email': DEFAULT_TEMPLATE,
+
+  '/validator/[hash]': 'View validator %hash% on %network_title%',
+  '/validators/history': DEFAULT_TEMPLATE,
 };
 
 export function make(pathname: Route['pathname']) {
