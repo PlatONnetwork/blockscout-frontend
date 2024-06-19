@@ -23,7 +23,7 @@ const ValidatorBlocksProduced = ({ query }: Props) => {
     <DataListDisplay
       isError={ isError }
       items={ data?.items }
-      emptyText="There are no block produced."
+      emptyText="There are no blocks produced."
       content={ content }/>
   );
 };

@@ -89,7 +89,7 @@ const ValidatorsTable = ({ data, sort, setSorting, isLoading, socketInfoAlert, s
           <AnimatePresence initial={ false }>
             { data.map((item, index) => (
               <ValidatorsTableItem
-                key={ String(item.rank) + (isLoading ? index : '') }
+                key={ String(item.validators) + (isLoading ? index : '') }
                 data={ item }
                 isLoading={ isLoading }/>
             )) }

@@ -26,7 +26,7 @@ const TAB_LIST_PROPS = {
 
 const ValidatorTabs = ({ isLoading, hash }: Props) => {
   const router = useRouter();
-  const tab = getQueryParamString(router.query.tab) || 'staking-events';
+  const tab = getQueryParamString(router.query.tab) || 'staking';
 
   const stakingQuery = useQueryWithPages({
     resourceName: 'validator_staking',
@@ -92,7 +92,7 @@ const ValidatorTabs = ({ isLoading, hash }: Props) => {
     {
       id: 'staking',
       title: 'Staking Events',
-      component: <ValidatorStakingEvents/>,
+      component: <ValidatorStakingEvents query={ stakingQuery }/>,
     },
     {
       id: 'block',
@@ -102,14 +102,14 @@ const ValidatorTabs = ({ isLoading, hash }: Props) => {
     {
       id: 'action',
       title: 'Validator Action',
-      component: <ValidatorAction/>,
+      component: <ValidatorAction query={ actionQuery }/>,
     },
     {
       id: 'delegator',
-      title: 'Validator Delegator',
-      component: <ValidatorDelegator/>,
+      title: 'Delegator',
+      component: <ValidatorDelegator query={ delegatorQuery }/>,
     },
-  ]), [ blockQuery ]);
+  ]), [ actionQuery, blockQuery, delegatorQuery, stakingQuery ]);
 
   const pagination = (() => {
     switch (tab) {

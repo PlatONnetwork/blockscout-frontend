@@ -43,11 +43,11 @@ export const VALIDATOR_ACTION: ValidatorAction = {
   action_desc: null,
   block_number: 1639,
   block_timestamp: '2024-02-27T09:06:08.000000Z',
-  tx_hash: '0x422aae14bfa4bf2f132d4bc467e647e261bbb1e912d40b58f206ed1b77505be1',
+  tx_hash: '0x6a7542f517f5a552bad7398a0eb4406bfbb60cbb0037719815526e02750c96ad',
 };
 
 export const VALIDATOR_DELEGATOR: ValidatorDelegator = {
   amount: '1000000000',
-  delegator_address: null,
+  delegator_address: '0x1dd26dfb60b996fd5d5152af723949971d9119ee',
   percentage: '待处理',
 };
