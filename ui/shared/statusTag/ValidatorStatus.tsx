@@ -12,11 +12,11 @@ interface Props {
 const ValidatorStatus = ({ state, isLoading }: Props) => {
   switch (state) {
     case ValidatorRole.ACTIVE:
-      return <Tag isLoading={ isLoading } colorScheme="green">Active</Tag>;
+      return <Tag px="10px" color="green.500" fontWeight="bold" isLoading={ isLoading } colorScheme="green">Active</Tag>;
     case ValidatorRole.VERIFYING:
-      return <Tag isLoading={ isLoading } colorScheme="orange">Verifying</Tag>;
+      return <Tag px="10px" color="orange.500" fontWeight="bold" isLoading={ isLoading } colorScheme="orange">Verifying...</Tag>;
     case ValidatorRole.CANDIDATE:
-      return <Tag isLoading={ isLoading } colorScheme="purple">Candidate</Tag>;
+      return <Tag px="10px" color="purple.500" fontWeight="bold" isLoading={ isLoading } colorScheme="purple">Candidate</Tag>;
     default:
       return null;
   }

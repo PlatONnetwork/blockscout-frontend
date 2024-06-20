@@ -18,9 +18,9 @@ const ValidatorDelegatorTable = ({ data, isLoading }: Props) => {
     <Table variant="simple" minWidth="830px" size="sm">
       <Thead top={ 76 }>
         <Tr>
-          <Th>Delegator Address</Th>
+          <Th width={ 650 }>Delegator Address</Th>
           <Th>Delegations</Th>
-          <Th>Percentage</Th>
+          <Th isNumeric>Percentage</Th>
         </Tr>
       </Thead>
       <Tbody>

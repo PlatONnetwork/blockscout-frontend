@@ -1,4 +1,4 @@
-import { Tr, Td, Skeleton, useColorModeValue } from '@chakra-ui/react';
+import { Tr, Td, Skeleton, useColorModeValue, Text } from '@chakra-ui/react';
 import React from 'react';
 
 import type { ValidatorStaking } from 'types/api/validator';
@@ -18,7 +18,7 @@ const ValidatorStakingTableItem = ({ data, isLoading }: Props) => {
     <Tr>
       <Td verticalAlign="middle">
         <Skeleton isLoaded={ !isLoading } display="inline-block">
-          <TxEntity hash={ data.tx_hash } isLoading={ isLoading } noIcon/>
+          <TxEntity hash={ data.tx_hash } isLoading={ isLoading } noIcon noCopy={ false }/>
         </Skeleton>
       </Td>
       <Td verticalAlign="middle" color={ ageColor }>
@@ -31,9 +31,13 @@ const ValidatorStakingTableItem = ({ data, isLoading }: Props) => {
           <BlockEntity number={ data.block_number } isLoading={ isLoading } noIcon/>
         </Skeleton>
       </Td>
-      <Td verticalAlign="middle">
+      <Td verticalAlign="middle" isNumeric>
         <Skeleton isLoaded={ !isLoading } display="inline-block">
-          { data.amount }
+          { !Number.isNaN(Number(data.amount)) ? (
+            <Text fontWeight={ 600 } color={ Number(data.amount) > 0 ? 'green.500' : 'red.500' }>
+              { Number(data.amount) >= 0 ? '+' : '-' }{ ' ' }{ Number(data.amount).toLocaleString() }
+            </Text>
+          ) : '-' }
         </Skeleton>
       </Td>
 

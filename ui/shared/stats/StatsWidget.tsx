@@ -74,7 +74,7 @@ const StatsWidget = ({ label, value, valuePrefix, valuePostfix, isLoading, hint,
             { valuePostfix && <chakra.span fontWeight={ 500 } fontSize="lg" lineHeight={ 6 } whiteSpace="pre">{ valuePostfix }</chakra.span> }
             { !Number.isNaN(Number(diff)) ? (
               <>
-                <Text fontWeight={ 500 } ml={ 2 } mr={ 1 } fontSize="lg" lineHeight={ 6 } color="green.500">
+                <Text fontWeight={ 500 } ml={ 2 } mr={ 1 } fontSize="lg" lineHeight={ 6 } color={ Number(diff) > 0 ? 'green.500' : 'red.500' }>
                   { Number(diff) >= 0 ? '+' : '-' }{ diffFormatted || Math.abs(Number(diff)).toLocaleString() }
                 </Text>
                 <Text variant="secondary" fontSize="sm">({ diffPeriod })</Text>

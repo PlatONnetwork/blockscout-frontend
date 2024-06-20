@@ -49,7 +49,7 @@ const ValidatorsTableItem = ({ data, isLoading }: Props) => {
           { formatNumberValue(data.delegate_amount, toLocaleStringFormatter) }
         </Skeleton>
       </Td>
-      <Td verticalAlign="middle">
+      <Td verticalAlign="middle" isNumeric>
         <Skeleton isLoaded={ !isLoading } display="inline-block">
           { formatNumberValue(data.expect_apr, percentageFormatter) }
         </Skeleton>

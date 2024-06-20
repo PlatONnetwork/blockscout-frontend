@@ -1,4 +1,4 @@
-import { Tr, Td, Skeleton } from '@chakra-ui/react';
+import { Tr, Td, Skeleton, Flex } from '@chakra-ui/react';
 import React from 'react';
 
 import type { ValidatorDelegator } from 'types/api/validator';
@@ -16,7 +16,7 @@ const ValidatorDelegatorTableItem = ({ data, isLoading }: Props) => {
     <Tr>
       <Td verticalAlign="middle">
         <Skeleton isLoaded={ !isLoading } display="inline-block">
-          <AddressEntity address={{ hash: data.delegator_address }} isLoading={ isLoading } noIcon/>
+          <AddressEntity address={{ hash: data.delegator_address }} isLoading={ isLoading } noIcon noCopy={ false }/>
         </Skeleton>
       </Td>
 
@@ -26,11 +26,13 @@ const ValidatorDelegatorTableItem = ({ data, isLoading }: Props) => {
         </Skeleton>
       </Td>
       <Td verticalAlign="middle">
-        <Utilization
-          colorScheme="gray"
-          value={ data.percentage }
-          isLoading={ isLoading }
-        />
+        <Flex justifyContent="flex-end">
+          <Utilization
+            colorScheme="gray"
+            value={ data.percentage }
+            isLoading={ isLoading }
+          />
+        </Flex>
       </Td>
 
     </Tr>

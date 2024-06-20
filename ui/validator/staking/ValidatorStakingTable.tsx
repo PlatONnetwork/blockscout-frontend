@@ -19,10 +19,10 @@ const ValidatorStakingTable = ({ data, isLoading }: Props) => {
     <Table variant="simple" minWidth="830px" size="sm">
       <Thead top={ 76 }>
         <Tr>
-          <Th>TxHash</Th>
+          <Th width={ 650 }>TxHash</Th>
           <Th>Age</Th>
           <Th>Block</Th>
-          <Th>Amount { config.chain.currency.symbol }</Th>
+          <Th isNumeric>Amount { config.chain.currency.symbol }</Th>
         </Tr>
       </Thead>
       <Tbody>

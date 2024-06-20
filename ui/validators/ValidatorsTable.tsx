@@ -51,10 +51,11 @@ const ValidatorsTable = ({ data, sort, setSorting, isLoading, socketInfoAlert, s
             </Th>
             <Th width="15%">Total Bonded</Th>
             <Th width="15%">Delegations</Th>
-            <Th width="150px" >
+            <Th width="150px">
               <Link
                 display="flex"
                 alignItems="center"
+                justifyContent="flex-end"
                 onClick={ isLoading ? undefined : onSortToggle('expect_apr') }
                 columnGap={ 1 }
               >

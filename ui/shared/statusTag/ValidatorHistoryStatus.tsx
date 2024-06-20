@@ -9,9 +9,9 @@ interface Props {
 
 const ValidatorHistoryStatus = ({ status, isLoading }: Props) => {
   if (status >= 8) {
-    return <Tag isLoading={ isLoading } colorScheme="gray">Exited</Tag>;
+    return <Tag px="10px" color="gray.500" fontWeight="bold" isLoading={ isLoading } colorScheme="gray">Exited</Tag>;
   } else {
-    return <Tag isLoading={ isLoading } colorScheme="red">Exiting...</Tag>;
+    return <Tag px="10px" color="red.500" fontWeight="bold" isLoading={ isLoading } colorScheme="red">Exiting...</Tag>;
   }
 };
 

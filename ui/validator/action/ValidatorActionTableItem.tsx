@@ -18,7 +18,7 @@ const ValidatorActionTableItem = ({ data, isLoading }: Props) => {
     <Tr>
       <Td verticalAlign="middle">
         <Skeleton isLoaded={ !isLoading } display="inline-block">
-          <TxEntity hash={ data.tx_hash } isLoading={ isLoading } noIcon/>
+          <TxEntity hash={ data.tx_hash } isLoading={ isLoading } noIcon noCopy={ false }/>
         </Skeleton>
       </Td>
       <Td verticalAlign="middle" color={ ageColor }>
@@ -31,7 +31,7 @@ const ValidatorActionTableItem = ({ data, isLoading }: Props) => {
           <BlockEntity number={ data.block_number } isLoading={ isLoading } noIcon/>
         </Skeleton>
       </Td>
-      <Td verticalAlign="middle">
+      <Td verticalAlign="middle" isNumeric>
         <Skeleton isLoaded={ !isLoading } display="inline-block">
           { data.action_desc }
         </Skeleton>

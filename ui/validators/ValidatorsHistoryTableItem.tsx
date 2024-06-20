@@ -4,6 +4,7 @@ import React from 'react';
 import type { HistoricalValidator } from 'types/api/validators';
 
 import dayjs from 'lib/date/dayjs';
+import BlockEntity from 'ui/shared/entities/block/BlockEntity';
 import ValidatorEntity from 'ui/shared/entities/validator/ValidatorEntity';
 import ValidatorHistoryStatus from 'ui/shared/statusTag/ValidatorHistoryStatus';
 
@@ -33,14 +34,14 @@ const ValidatorsHistoryTableItem = ({ data, isLoading }: Props) => {
       <Td verticalAlign="middle">
         <Skeleton isLoaded={ !isLoading } display="inline-block">
           <VStack align="left">
-            <Text>{ data.exit_block }</Text>
+            <BlockEntity number={ data.exit_block } noIcon/>
             <Text color="#999">{ dayjs(data.exit_timestamp).fromNow() }</Text>
           </VStack>
         </Skeleton>
       </Td>
       <Td verticalAlign="middle">
         <Skeleton isLoaded={ !isLoading } display="inline-block">
-          { data.event }
+          { data.event || '-' }
         </Skeleton>
       </Td>
     </Tr>
