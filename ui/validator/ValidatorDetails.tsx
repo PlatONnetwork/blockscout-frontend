@@ -2,12 +2,11 @@ import { Grid, Skeleton } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import React from 'react';
 
-import type { ValidatorResponse } from 'types/api/validators';
+import type { ValidatorResponse } from 'types/api/validator';
 
 import type { ResourceError } from 'lib/api/resources';
 import DetailsInfoItem from 'ui/shared/DetailsInfoItem';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
-import { formatNumberValue, percentageFormatter } from 'ui/shared/validator/utils';
 
 type Props = {
   query: UseQueryResult<ValidatorResponse, ResourceError>;
@@ -35,7 +34,7 @@ const ValidatorDetails = ({ query }: Props) => {
         isLoading={ isPlaceholderData }
       >
         <Skeleton isLoaded={ !isPlaceholderData } display="inline-block">
-          { formatNumberValue(data?.commission, percentageFormatter) }
+          { data?.commission }%
         </Skeleton>
       </DetailsInfoItem>
       <DetailsInfoItem

@@ -1,18 +1,21 @@
 import { Tr, Td, Skeleton, Text, VStack } from '@chakra-ui/react';
+import BigNumber from 'bignumber.js';
 import React from 'react';
 
-import type { Validator } from 'types/api/validators';
+import type { Validator, ValidatorsCountersResponse } from 'types/api/validators';
 
 import ValidatorEntity from 'ui/shared/entities/validator/ValidatorEntity';
 import ValidatorStatus from 'ui/shared/statusTag/ValidatorStatus';
-import { formatNumberValue, percentageFormatter, toLocaleStringFormatter } from 'ui/shared/validator/utils';
+import { currencyAmountFormatter } from 'ui/shared/validator/utils';
 
 interface Props {
   data: Validator;
+  counterData: ValidatorsCountersResponse;
   isLoading?: boolean;
 }
 
-const ValidatorsTableItem = ({ data, isLoading }: Props) => {
+const ValidatorsTableItem = ({ data, counterData, isLoading }: Props) => {
+  const totalBonded = new BigNumber(data.stake_amount).plus(data.delegate_amount);
   return (
     <Tr>
       <Td verticalAlign="middle">
@@ -33,30 +36,30 @@ const ValidatorsTableItem = ({ data, isLoading }: Props) => {
       </Td>
       <Td verticalAlign="middle">
         <Skeleton isLoaded={ !isLoading } display="inline-block">
-          { formatNumberValue(data.commission, percentageFormatter) }
+          { String(data.commission) }%
         </Skeleton>
       </Td>
       <Td verticalAlign="middle">
         <Skeleton isLoaded={ !isLoading } display="inline-block">
           <VStack align="left">
-            <Text>{ data.total_bonded_amount }</Text>
-            <Text color="#999">{ formatNumberValue(data.total_bonded_percent, percentageFormatter) }</Text>
+            <Text>{ currencyAmountFormatter(totalBonded.toString()) }</Text>
+            <Text color="#999">{ totalBonded.div(counterData.total_bonded).times(100).toFixed(2) }%</Text>
           </VStack>
         </Skeleton>
       </Td>
       <Td verticalAlign="middle" >
         <Skeleton isLoaded={ !isLoading } display="inline-block">
-          { formatNumberValue(data.delegate_amount, toLocaleStringFormatter) }
+          { currencyAmountFormatter(data.delegate_amount) }
         </Skeleton>
       </Td>
       <Td verticalAlign="middle" isNumeric>
         <Skeleton isLoaded={ !isLoading } display="inline-block">
-          { formatNumberValue(data.expect_apr, percentageFormatter) }
+          { Number(data.expect_apr) / 100 }%
         </Skeleton>
       </Td>
       <Td verticalAlign="middle" isNumeric>
         <Skeleton isLoaded={ !isLoading } display="inline-block">
-          { formatNumberValue(data.block_rate, percentageFormatter) }
+          { Number(data.block_rate) / 100 }%
 
         </Skeleton>
       </Td>

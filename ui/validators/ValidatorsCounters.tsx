@@ -1,29 +1,32 @@
 import { Box } from '@chakra-ui/react';
+import type { UseQueryResult } from '@tanstack/react-query';
 import React, { useMemo } from 'react';
 
+import type { ValidatorsCountersResponse } from 'types/api/validators';
+
 import config from 'configs/app';
-import useApiQuery from 'lib/api/useApiQuery';
-import { VALIDATORS_COUNTERS } from 'stubs/validators';
+import type { ResourceError } from 'lib/api/resources';
 import StatsWidget from 'ui/shared/stats/StatsWidget';
 import StatsHint from 'ui/shared/validator/StatsHint';
+import { currencyAmountFormatter, divDecimals } from 'ui/shared/validator/utils';
 
-const ValidatorsCounters = () => {
-  const countersQuery = useApiQuery('validators_counters', {
-    queryOptions: {
-      placeholderData: VALIDATORS_COUNTERS,
-    },
-  });
+type Props = {
+  query: UseQueryResult<ValidatorsCountersResponse, ResourceError>;
+}
 
-  const hints = useMemo(() => countersQuery.data ? [ {
+const ValidatorsCounters = ({ query }: Props) => {
+  const { isPlaceholderData, data } = query;
+
+  const hints = useMemo(() => data ? [ {
     label: 'BlockReward',
-    value: countersQuery.data.block_reward + ' ' + config.chain.currency.symbol,
+    value: currencyAmountFormatter(data.block_reward) + ' ' + config.chain.currency.symbol,
   }, {
     label: 'EpochStakingReward',
-    value: countersQuery.data.epoch_staking_reward + ' ' + config.chain.currency.symbol,
+    value: currencyAmountFormatter(data.epoch_staking_reward) + ' ' + config.chain.currency.symbol,
   } ] :
-    null, [ countersQuery ]);
+    null, [ data ]);
 
-  if (!countersQuery.data) {
+  if (!data) {
     return null;
   }
 
@@ -31,22 +34,22 @@ const ValidatorsCounters = () => {
     <Box columnGap={ 3 } rowGap={ 3 } mb={ 6 } display="grid" gridTemplateColumns={{ base: '1fr', lg: 'repeat(3, 1fr)' }}>
       <StatsWidget
         label="validators"
-        value={ Number(countersQuery.data.validators).toLocaleString() }
-        diff={ countersQuery.data.validators_24_hours }
+        value={ Number(data.validators).toLocaleString() }
+        diff={ data.validators_24_hours }
         diffPeriod="24h"
-        isLoading={ countersQuery.isPlaceholderData }
+        isLoading={ isPlaceholderData }
       />
       <StatsWidget
         label={ `Total Bonded(${ config.chain.currency.symbol })` }
-        value={ Number(countersQuery.data.total_bonded).toLocaleString() }
-        diff={ countersQuery.data.total_bonded_24_hours }
+        value={ currencyAmountFormatter(data.total_bonded) }
+        diff={ divDecimals(data.total_bonded_24_hours) }
         diffPeriod="24h"
-        isLoading={ countersQuery.isPlaceholderData }
+        isLoading={ isPlaceholderData }
       />
       <StatsWidget
         label={ `Reward Pool(${ config.chain.currency.symbol })` }
-        value={ countersQuery.data.reward_pool }
-        isLoading={ countersQuery.isPlaceholderData }
+        value={ currencyAmountFormatter(data.reward_pool) }
+        isLoading={ isPlaceholderData }
         hint={ (
           <StatsHint list={ hints }/>
         ) }

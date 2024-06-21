@@ -101,10 +101,10 @@ import type {
   ValidatorBlocksResponse,
   ValidatorDelegatorResponse,
   ValidatorFilters,
+  ValidatorResponse,
   ValidatorStakingResponse,
 } from 'types/api/validator';
 import type {
-  ValidatorResponse,
   ValidatorsCountersResponse,
   ValidatorsFilters,
   ValidatorsHistoryResponse,

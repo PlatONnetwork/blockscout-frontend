@@ -1,5 +1,4 @@
-import type { ValidatorAction, ValidatorBlock, ValidatorDelegator, ValidatorStaking } from 'types/api/validator';
-import type { ValidatorResponse } from 'types/api/validators';
+import type { ValidatorAction, ValidatorBlock, ValidatorDelegator, ValidatorStaking, ValidatorResponse } from 'types/api/validator';
 
 export const VALIDATOR_DETAIL: ValidatorResponse = {
   blocks: 16514,

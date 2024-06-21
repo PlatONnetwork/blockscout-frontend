@@ -1,14 +1,12 @@
 import { Tr, Td, Skeleton, HStack, Text, useColorModeValue } from '@chakra-ui/react';
-import BigNumber from 'bignumber.js';
 import React from 'react';
 
 import type { ValidatorBlock } from 'types/api/validator';
 
-import config from 'configs/app';
 import dayjs from 'lib/date/dayjs';
 import BlockEntity from 'ui/shared/entities/block/BlockEntity';
 import Utilization from 'ui/shared/Utilization/Utilization';
-import { formatNumberValue, toLocaleStringFormatter } from 'ui/shared/validator/utils';
+import { currencyAmountFormatter, formatNumberValue, toLocaleStringFormatter } from 'ui/shared/validator/utils';
 
 interface Props {
   data: ValidatorBlock;
@@ -31,7 +29,7 @@ const ValidatorBlocksTableItem = ({ data, isLoading }: Props) => {
       </Td>
       <Td verticalAlign="middle">
         <Skeleton isLoaded={ !isLoading } display="inline-block">
-          { formatNumberValue(data.txn, toLocaleStringFormatter) }
+          { Number(data.txn).toLocaleString() }
         </Skeleton>
       </Td>
       <Td verticalAlign="middle">
@@ -51,12 +49,12 @@ const ValidatorBlocksTableItem = ({ data, isLoading }: Props) => {
       </Td>
       <Td verticalAlign="middle" isNumeric>
         <Skeleton isLoaded={ !isLoading } display="inline-block">
-          { new BigNumber(data.tx_fee_reward).div(10 ** config.chain.currency.decimals).toFixed() }
+          { currencyAmountFormatter(data.tx_fee_reward) }
         </Skeleton>
       </Td>
       <Td verticalAlign="middle" isNumeric>
         <Skeleton isLoaded={ !isLoading } display="inline-block">
-          { new BigNumber(data.block_reward).div(10 ** config.chain.currency.decimals).toFixed() }
+          { currencyAmountFormatter(data.block_reward) }
         </Skeleton>
       </Td>
     </Tr>

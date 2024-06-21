@@ -1,3 +1,5 @@
+import type { ValidatorRole } from './validators';
+
 export interface ValidatorStaking {
   amount: string;
   block_number: number;
@@ -59,4 +61,24 @@ export interface ValidatorDelegatorResponse {
 
 export interface ValidatorFilters {
   validator_hash: string;
+}
+export interface ValidatorResponse {
+  owner_address: string;
+  commission: number;
+  website: string | null;
+  detail: string | null;
+  total_bonded: string;
+  self_stakes: string;
+  unbonding: string;
+  pending_withdrawal: string;
+  delegations: string;
+  delegations_proportion: number;
+  blocks: number;
+  block_rate: number;
+  expect_apr: string | null;
+  total_rewards: string;
+  validator_claimable_rewards: string;
+  validator_rewards: string;
+  delegator_rewards: string;
+  role: ValidatorRole;
 }

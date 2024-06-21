@@ -2,7 +2,7 @@ import { Table, Tbody, Tr, Th, Link } from '@chakra-ui/react';
 import { AnimatePresence } from 'framer-motion';
 import React from 'react';
 
-import type { Validator, ValidatorsSorting, ValidatorsSortingField, ValidatorsSortingValue } from 'types/api/validators';
+import type { Validator, ValidatorsCountersResponse, ValidatorsSorting, ValidatorsSortingField, ValidatorsSortingValue } from 'types/api/validators';
 
 import { AddressHighlightProvider } from 'lib/contexts/addressHighlight';
 import IconSvg from 'ui/shared/IconSvg';
@@ -20,9 +20,10 @@ interface Props {
   isLoading?: boolean;
   socketInfoAlert?: string;
   socketInfoNum?: number;
+  counterData: ValidatorsCountersResponse;
 }
 
-const ValidatorsTable = ({ data, sort, setSorting, isLoading, socketInfoAlert, socketInfoNum }: Props) => {
+const ValidatorsTable = ({ data, sort, setSorting, isLoading, socketInfoAlert, socketInfoNum, counterData }: Props) => {
   const sortIconTransform = sort?.includes('asc' as ValidatorsSorting['order']) ? 'rotate(-90deg)' : 'rotate(90deg)';
 
   const onSortToggle = React.useCallback((field: ValidatorsSortingField) => () => {
@@ -92,7 +93,8 @@ const ValidatorsTable = ({ data, sort, setSorting, isLoading, socketInfoAlert, s
               <ValidatorsTableItem
                 key={ String(item.validators) + (isLoading ? index : '') }
                 data={ item }
-                isLoading={ isLoading }/>
+                isLoading={ isLoading }
+                counterData={ counterData }/>
             )) }
           </AnimatePresence>
         </Tbody>

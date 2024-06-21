@@ -1,8 +1,10 @@
 import { Hide, Show } from '@chakra-ui/react';
+import type { UseQueryResult } from '@tanstack/react-query';
 import React, { useMemo } from 'react';
 
-import type { ValidatorsSortingValue } from 'types/api/validators';
+import type { ValidatorsCountersResponse, ValidatorsSortingValue } from 'types/api/validators';
 
+import type { ResourceError } from 'lib/api/resources';
 import * as cookies from 'lib/cookies';
 import useNewValidatorsSocket from 'lib/hooks/useNewValidatorsSocket';
 import { apos } from 'lib/html-entities';
@@ -15,11 +17,12 @@ import sortValidators from './utils';
 
 type Props = {
   query: QueryWithPagesResult<'validators'>;
+  counterQuery: UseQueryResult<ValidatorsCountersResponse, ResourceError>;
   searchTerm: string | undefined;
 }
 type SortingValue = ValidatorsSortingValue | undefined;
 
-const ValidatorsWithFrontendSorting = ({ query, searchTerm }: Props) => {
+const ValidatorsWithFrontendSorting = ({ query, counterQuery, searchTerm }: Props) => {
   const [ sort, setSort ] =
     React.useState<SortingValue>(cookies.get(cookies.NAMES.VALIDATORS_SORT) as SortingValue);
 
@@ -39,7 +42,7 @@ const ValidatorsWithFrontendSorting = ({ query, searchTerm }: Props) => {
   const { num, socketAlert } = useNewValidatorsSocket();
 
   const sortedList = useMemo(() => data?.items.slice().sort(sortValidators(sort)), [ data, sort ]);
-  const content = sortedList ? (
+  const content = sortedList && counterQuery.data ? (
     <>
       <Show below="lg" ssr={ false }>
         <ValidatorsList data={ sortedList } isLoading={ isPlaceholderData }/>
@@ -51,7 +54,9 @@ const ValidatorsWithFrontendSorting = ({ query, searchTerm }: Props) => {
           data={ sortedList }
           sort={ sort }
           setSorting={ setSortByValue }
-          isLoading={ isPlaceholderData }/>
+          isLoading={ isPlaceholderData || counterQuery.isPlaceholderData }
+          counterData={ counterQuery.data }
+        />
       </Hide>
     </>
   ) : null;

@@ -9,8 +9,7 @@ export interface Validator {
   validators: string;
   role: ValidatorRole;
   commission: number;
-  total_bonded_amount: string;
-  total_bonded_percent: string;
+  stake_amount: string;
   delegate_amount: string;
   expect_apr: string | null;
   block_rate: string | null;
@@ -43,27 +42,6 @@ export interface HistoricalValidator {
 export interface ValidatorsHistoryResponse {
   items: Array<HistoricalValidator>;
   next_page_params: null;
-}
-
-export interface ValidatorResponse {
-  owner_address: string;
-  commission: number;
-  website: string | null;
-  detail: string | null;
-  total_bonded: string;
-  self_stakes: string;
-  unbonding: string;
-  pending_withdrawal: string;
-  delegations: string;
-  delegations_proportion: number;
-  blocks: number;
-  block_rate: number;
-  expect_apr: string | null;
-  total_rewards: string;
-  validator_claimable_rewards: string;
-  validator_rewards: string;
-  delegator_rewards: string;
-  role: ValidatorRole;
 }
 
 export interface ValidatorsFilters {

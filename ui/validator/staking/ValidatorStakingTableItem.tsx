@@ -1,4 +1,5 @@
 import { Tr, Td, Skeleton, useColorModeValue, Text } from '@chakra-ui/react';
+import BigNumber from 'bignumber.js';
 import React from 'react';
 
 import type { ValidatorStaking } from 'types/api/validator';
@@ -6,6 +7,7 @@ import type { ValidatorStaking } from 'types/api/validator';
 import dayjs from 'lib/date/dayjs';
 import BlockEntity from 'ui/shared/entities/block/BlockEntity';
 import TxEntity from 'ui/shared/entities/tx/TxEntity';
+import { currencyAmountFormatter } from 'ui/shared/validator/utils';
 
 interface Props {
   data: ValidatorStaking;
@@ -35,7 +37,7 @@ const ValidatorStakingTableItem = ({ data, isLoading }: Props) => {
         <Skeleton isLoaded={ !isLoading } display="inline-block">
           { !Number.isNaN(Number(data.amount)) ? (
             <Text fontWeight={ 600 } color={ Number(data.amount) > 0 ? 'green.500' : 'red.500' }>
-              { Number(data.amount) >= 0 ? '+' : '-' }{ ' ' }{ Number(data.amount).toLocaleString() }
+              { new BigNumber(data.amount).gte(0) ? '+' : '-' }{ ' ' }{ currencyAmountFormatter(data.amount) }
             </Text>
           ) : '-' }
         </Skeleton>

@@ -1,15 +1,16 @@
 import { Grid, HStack, Text } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
+import BigNumber from 'bignumber.js';
 import React, { useMemo } from 'react';
 
-import type { ValidatorResponse } from 'types/api/validators';
+import type { ValidatorResponse } from 'types/api/validator';
 
 import config from 'configs/app';
 import type { ResourceError } from 'lib/api/resources';
 import DataFetchAlert from 'ui/shared/DataFetchAlert';
 import StatsWidget from 'ui/shared/stats/StatsWidget';
 import StatsHint from 'ui/shared/validator/StatsHint';
-import { formatNumberValue, percentageFormatter, toLocaleStringFormatter } from 'ui/shared/validator/utils';
+import { currencyAmountFormatter } from 'ui/shared/validator/utils';
 
 type Props = {
   query: UseQueryResult<ValidatorResponse, ResourceError>;
@@ -18,31 +19,31 @@ type Props = {
 const ValidatorStats = ({ query }: Props) => {
   const { data, isError, isPlaceholderData } = query;
 
-  const selfStackHints = useMemo(() => data ? [
+  const selfStackHints = useMemo(() => [
     {
       label: 'Self-Stakes',
-      value: data.self_stakes + ' ' + config.chain.currency.symbol,
+      value: currencyAmountFormatter(data?.self_stakes) + ' ' + config.chain.currency.symbol,
     },
     {
       label: 'Unbonding',
-      value: data.unbonding + ' ' + config.chain.currency.symbol,
+      value: currencyAmountFormatter(data?.unbonding) + ' ' + config.chain.currency.symbol,
     },
     {
       label: 'Pending Withdrawal',
-      value: data.pending_withdrawal + ' ' + config.chain.currency.symbol,
+      value: currencyAmountFormatter(data?.pending_withdrawal) + ' ' + config.chain.currency.symbol,
     },
-  ] : null, [ data ]);
+  ], [ data ]);
 
-  const rewardsHints = useMemo(() => data ? [
+  const rewardsHints = useMemo(() => [
     {
       label: 'Validator Rewards',
-      value: data.validator_rewards + ' ' + config.chain.currency.symbol,
+      value: currencyAmountFormatter(data?.validator_rewards) + ' ' + config.chain.currency.symbol,
     },
     {
       label: 'Delegator Rewards',
-      value: data.delegator_rewards + ' ' + config.chain.currency.symbol,
+      value: currencyAmountFormatter(data?.delegator_rewards) + ' ' + config.chain.currency.symbol,
     },
-  ] : null, [ data ]);
+  ], [ data ]);
 
   if (isError) {
     return <DataFetchAlert/>;
@@ -61,12 +62,12 @@ const ValidatorStats = ({ query }: Props) => {
     >
       <StatsWidget
         label="Total Bonded"
-        value={ formatNumberValue(data.total_bonded, toLocaleStringFormatter) }
+        value={ currencyAmountFormatter(data.total_bonded) }
         isLoading={ isPlaceholderData }
       />
       <StatsWidget
         label="Self-Stakes"
-        value={ formatNumberValue(data.self_stakes, toLocaleStringFormatter) }
+        value={ currencyAmountFormatter(data.self_stakes) }
         isLoading={ isPlaceholderData }
         hint={ (
           <StatsHint title="Validator staking info" list={ selfStackHints }/>
@@ -76,31 +77,31 @@ const ValidatorStats = ({ query }: Props) => {
         label="Delegations"
         value={ (
           <HStack alignItems="center" gap="4px">
-            <Text>{ formatNumberValue(data.delegations, toLocaleStringFormatter) }
+            <Text>{ currencyAmountFormatter(data.delegations) }
             </Text>
-            <Text color="gray.400">({ formatNumberValue(data.delegations_proportion, percentageFormatter) })</Text>
+            <Text color="gray.400">({ Number(new BigNumber(data.delegations).div(data.total_bonded).times(100).toFixed(2)) }%)</Text>
           </HStack>
         ) }
         isLoading={ isPlaceholderData }
       />
       <StatsWidget
         label="Blocks"
-        value={ formatNumberValue(data.blocks, toLocaleStringFormatter) }
+        value={ Number(data.blocks).toLocaleString() }
         isLoading={ isPlaceholderData }
       />
       <StatsWidget
         label="Block Rate(24h)"
-        value={ formatNumberValue(data.block_rate, percentageFormatter) }
+        value={ `${ Number(data.block_rate) / 100 }%` }
         isLoading={ isPlaceholderData }
       />
       <StatsWidget
         label="Expect APR"
-        value={ formatNumberValue(data.expect_apr, percentageFormatter) }
+        value={ `${ Number(data.expect_apr) / 100 }%` }
         isLoading={ isPlaceholderData }
       />
       <StatsWidget
         label="Total Rewards"
-        value={ formatNumberValue(data.total_rewards, toLocaleStringFormatter) }
+        value={ currencyAmountFormatter(data.total_rewards) }
         isLoading={ isPlaceholderData }
         hint={ (
           <StatsHint title="Reward distribution" list={ rewardsHints }/>
@@ -108,7 +109,7 @@ const ValidatorStats = ({ query }: Props) => {
       />
       <StatsWidget
         label="Validator Claimable Rewards"
-        value={ formatNumberValue(data.validator_claimable_rewards, toLocaleStringFormatter) }
+        value={ currencyAmountFormatter(data.validator_claimable_rewards) }
         isLoading={ isPlaceholderData }
       />
     </Grid>

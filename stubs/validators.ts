@@ -8,8 +8,7 @@ export const VALIDATOR: Validator = {
   rank: 1,
   role: 2, // 0-candidate(质押节点) 1-active(共识节点候选人) 2-verifying(共识节点)
   validators: '0x1dd26dfb60b996fd5d5152af723949971d9119ee',
-  total_bonded_amount: '0',
-  total_bonded_percent: '0',
+  stake_amount: '0',
 };
 
 export const VALIDATORS_COUNTERS: ValidatorsCountersResponse = {

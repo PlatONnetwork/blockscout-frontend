@@ -4,11 +4,12 @@ import React, { useCallback, useMemo } from 'react';
 
 import type { RoutedTab } from 'ui/shared/Tabs/types';
 
+import useApiQuery from 'lib/api/useApiQuery';
 import useDebounce from 'lib/hooks/useDebounce';
 import useIsMobile from 'lib/hooks/useIsMobile';
 import getQueryParamString from 'lib/router/getQueryParamString';
 import { generateListStub } from 'stubs/utils';
-import { VALIDATOR } from 'stubs/validators';
+import { VALIDATOR, VALIDATORS_COUNTERS } from 'stubs/validators';
 import FilterInput from 'ui/shared/filters/FilterInput';
 import LinkInternal from 'ui/shared/LinkInternal';
 import PageTitle from 'ui/shared/Page/PageTitle';
@@ -77,23 +78,29 @@ const Validators = () => {
     },
   });
 
+  const countersQuery = useApiQuery('validators_counters', {
+    queryOptions: {
+      placeholderData: VALIDATORS_COUNTERS,
+    },
+  });
+
   const tabs: Array<RoutedTab> = useMemo(() => ([
     {
       id: 'all',
       title: 'All',
-      component: <ValidatorsWithFrontendSorting query={ allQuery } searchTerm={ searchTerm }/>,
+      component: <ValidatorsWithFrontendSorting query={ allQuery } counterQuery={ countersQuery } searchTerm={ searchTerm }/>,
     },
     {
       id: 'active',
       title: 'Active',
-      component: <ValidatorsWithFrontendSorting query={ activeQuery } searchTerm={ searchTerm }/>,
+      component: <ValidatorsWithFrontendSorting query={ activeQuery } counterQuery={ countersQuery } searchTerm={ searchTerm }/>,
     },
     {
       id: 'candidate',
       title: 'Candidate',
-      component: <ValidatorsWithFrontendSorting query={ candidateQuery } searchTerm={ searchTerm }/>,
+      component: <ValidatorsWithFrontendSorting query={ candidateQuery } counterQuery={ countersQuery } searchTerm={ searchTerm }/>,
     },
-  ]), [ activeQuery, allQuery, candidateQuery, searchTerm ]);
+  ]), [ activeQuery, allQuery, candidateQuery, countersQuery, searchTerm ]);
 
   const onTabChange = useCallback(() => {
     setSearchTerm('');
@@ -102,7 +109,7 @@ const Validators = () => {
   return (
     <Box>
       <PageTitle title="Validators" withTextAd/>
-      <ValidatorsCounters/>
+      <ValidatorsCounters query={ countersQuery }/>
       <RoutedTabs
         tabs={ tabs }
         tabListProps={ TAB_LIST_PROPS }

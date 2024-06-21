@@ -17,7 +17,7 @@ const StatsHint = ({ list, title }: Props) => {
     <Box padding="14px" fontSize="13px">
       { title ? <Text color={ titleColor } mb="15px">{ title }</Text> : null }
       <Grid
-        gridTemplateColumns="repeat(2, minmax(100px, auto))"
+        gridTemplateColumns="repeat(2, minmax(50px, auto))"
         gridGap="10px 30px"
       >
         {
