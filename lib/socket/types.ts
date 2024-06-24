@@ -37,6 +37,7 @@ SocketMessage.NewZkEvmL2Batch |
 SocketMessage.AllValidators |
 SocketMessage.ActiveValidators |
 SocketMessage.CandidateValidators |
+SocketMessage.HistoryValidators |
 SocketMessage.Unknown;
 
 interface SocketMessageParamsGeneric<Event extends string | undefined, Payload extends object | unknown> {
@@ -77,5 +78,6 @@ export namespace SocketMessage {
   export type AllValidators = SocketMessageParamsGeneric<'all_validator', number>;
   export type ActiveValidators = SocketMessageParamsGeneric<'active_validator', number>;
   export type CandidateValidators = SocketMessageParamsGeneric<'candidate_validator', number>;
+  export type HistoryValidators = SocketMessageParamsGeneric<'history_validator', number>;
   export type Unknown = SocketMessageParamsGeneric<undefined, unknown>;
 }

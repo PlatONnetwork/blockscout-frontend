@@ -9,7 +9,7 @@ import PageTitle from 'ui/shared/Page/PageTitle';
 import ValidatorsHistoryTable from 'ui/validators/ValidatorsHistoryTable';
 
 const HistoricalValidator = () => {
-  const { data, isPlaceholderData, isError } = useApiQuery('validators_history', {
+  const { data, isPlaceholderData, isError, refetch } = useApiQuery('validators_history', {
     queryOptions: {
       placeholderData: generateListStub<'validators_history'>(
         VALIDATOR_HISTORY,
@@ -18,12 +18,13 @@ const HistoricalValidator = () => {
       ),
     },
   });
-  const { num, socketAlert } = useNewValidatorsSocket();
+  const { socketAlert } = useNewValidatorsSocket(refetch);
+
   const content = data ? (
     <ValidatorsHistoryTable
       data={ data.items }
       isLoading={ isPlaceholderData }
-      socketInfoNum={ num }
+      socketInfoNum={ 0 }
       socketInfoAlert={ socketAlert }/>
   ) : null;
 

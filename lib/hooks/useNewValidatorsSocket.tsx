@@ -1,11 +1,10 @@
 import { useRouter, type NextRouter } from 'next/router';
 import React from 'react';
 
-import useGradualIncrement from 'lib/hooks/useGradualIncrement';
 import useSocketChannel from 'lib/socket/useSocketChannel';
 import useSocketMessage from 'lib/socket/useSocketMessage';
 
-type Event = 'all_validator' | 'active_validator' | 'candidate_validator'
+type Event = 'all_validator' | 'active_validator' | 'candidate_validator' | 'history_validator'
 
 const getValidatorType = (router: NextRouter) => {
   if (!router.pathname.includes('/validators')) {
@@ -18,19 +17,16 @@ const getValidatorType = (router: NextRouter) => {
 
 };
 
-export default function useNewValidatorsSocket() {
+export default function useNewValidatorsSocket(handler: () => void) {
   const router = useRouter();
 
-  const [ num, setNum ] = useGradualIncrement(0);
   const [ socketAlert, setSocketAlert ] = React.useState('');
 
   const validatorType = getValidatorType(router);
   const topic = `platon_appchain_l2_validator:${ validatorType }_validator`;
   const event = `${ validatorType }_validator` as Event;
-
-  const handleNewValidatorMessage = React.useCallback((response: number) => {
-    setNum(response);
-  }, [ setNum ]);
+  // const topic = 'transactions:new_transaction';
+  // const event = 'transaction';
 
   const handleSocketClose = React.useCallback(() => {
     setSocketAlert('Connection is lost. Please reload page.');
@@ -50,12 +46,12 @@ export default function useNewValidatorsSocket() {
   useSocketMessage({
     channel,
     event,
-    handler: handleNewValidatorMessage,
+    handler,
   });
 
   if (!topic && !event) {
     return {};
   }
 
-  return { num, socketAlert };
+  return { socketAlert };
 }

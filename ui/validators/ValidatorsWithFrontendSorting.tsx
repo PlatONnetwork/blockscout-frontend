@@ -39,7 +39,7 @@ const ValidatorsWithFrontendSorting = ({ query, counterQuery, searchTerm }: Prop
     });
   }, []);
 
-  const { num, socketAlert } = useNewValidatorsSocket();
+  const { socketAlert } = useNewValidatorsSocket(query.refetch);
 
   const sortedList = useMemo(() => data?.items.slice().sort(sortValidators(sort)), [ data, sort ]);
   const content = sortedList && counterQuery.data ? (
@@ -49,7 +49,7 @@ const ValidatorsWithFrontendSorting = ({ query, counterQuery, searchTerm }: Prop
       </Show>
       <Hide below="lg" ssr={ false }>
         <ValidatorsTable
-          socketInfoNum={ num }
+          socketInfoNum={ 0 }
           socketInfoAlert={ socketAlert }
           data={ sortedList }
           sort={ sort }
