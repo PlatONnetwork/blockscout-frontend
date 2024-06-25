@@ -1,5 +1,6 @@
 import { Flex } from '@chakra-ui/react';
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useBlockNumber } from 'wagmi';
 
 import useNewValidatorsSocket from 'lib/hooks/useNewValidatorsSocket';
 import { generateListStub } from 'stubs/utils';
@@ -21,12 +22,18 @@ const HistoricalValidator = () => {
       ),
     },
   });
-  const { socketAlert } = useNewValidatorsSocket(refetch);
 
-  const content = data ? (
+  const { socketAlert } = useNewValidatorsSocket(refetch);
+  const { data: blockNumber } = useBlockNumber();
+  const list = useMemo(() => data?.items.map(item => ({
+    ...item,
+    exited: Boolean(item.lock_block && blockNumber && blockNumber > item.lock_block),
+  })), [ blockNumber, data?.items ]);
+
+  const content = list ? (
     <ValidatorsHistoryTable
-      data={ data.items }
-      isLoading={ isPlaceholderData }
+      data={ list }
+      isLoading={ Boolean(isPlaceholderData) }
       socketInfoNum={ 0 }
       socketInfoAlert={ socketAlert }/>
   ) : null;

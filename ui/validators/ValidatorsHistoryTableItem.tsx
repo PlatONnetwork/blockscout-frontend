@@ -29,7 +29,7 @@ const ValidatorsHistoryTableItem = ({ data, isLoading }: Props) => {
         />
       </Td>
       <Td verticalAlign="middle">
-        <ValidatorHistoryStatus status={ data.status } isLoading={ isLoading }/>
+        <ValidatorHistoryStatus exited={ data.exited } isLoading={ isLoading }/>
       </Td>
       <Td verticalAlign="middle">
         <Skeleton isLoaded={ !isLoading } display="inline-block">

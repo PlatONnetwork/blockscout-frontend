@@ -2,6 +2,8 @@ import { Flex } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React from 'react';
 
+import { ValidatorRole } from 'types/api/validators';
+
 import useApiQuery from 'lib/api/useApiQuery';
 import { useAppContext } from 'lib/contexts/app';
 import throwOnAbsentParamError from 'lib/errors/throwOnAbsentParamError';
@@ -12,10 +14,12 @@ import { VALIDATOR_DETAIL } from 'stubs/validator';
 import AddressQrCode from 'ui/address/details/AddressQrCode';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import PageTitle from 'ui/shared/Page/PageTitle';
+import ValidatorHistoryStatus from 'ui/shared/statusTag/ValidatorHistoryStatus';
 import ValidatorStatus from 'ui/shared/statusTag/ValidatorStatus';
 import ValidatorDetails from 'ui/validator/ValidatorDetails';
 import ValidatorStats from 'ui/validator/ValidatorStats';
 import ValidatorTabs from 'ui/validator/ValidatorTabs';
+import { useLatestBlock } from 'ui/validators/useLatestBlock';
 
 const Validator = () => {
   const router = useRouter();
@@ -62,13 +66,23 @@ const Validator = () => {
     };
   }, [ appProps.referrer ]);
 
+  const block = useLatestBlock();
+
+  const statusTag = validatorQuery.data?.status !== 0 ? (
+    <ValidatorHistoryStatus
+      exited={ Boolean(validatorQuery.data?.lock_block && block?.number && block.number > validatorQuery.data?.lock_block) }
+      isLoading={ isLoading || !block }/>
+  ) : (
+    <ValidatorStatus
+      isLoading={ isLoading || !block }
+      state={ block?.miner.toLowerCase() === hash.toLowerCase() ? ValidatorRole.VERIFYING : validatorQuery.data?.role }/>
+  );
+
   return (
     <>
       <PageTitle
         title={ shortenString(hash, 16) }
-        contentAfter={ (
-          <ValidatorStatus isLoading={ isLoading } state={ validatorQuery.data?.role }/>
-        ) }
+        contentAfter={ statusTag }
         isLoading={ isLoading }
         secondRow={ titleSecondRow }
         backLink={ backLink }

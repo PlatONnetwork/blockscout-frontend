@@ -37,6 +37,8 @@ export interface HistoricalValidator {
   status: number;
   exit_timestamp: string;
   validators: string;
+  lock_block: number;
+  exited?: boolean;
 }
 
 export interface ValidatorsHistoryResponse {

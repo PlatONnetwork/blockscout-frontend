@@ -2,7 +2,7 @@ import { Hide, Show } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
 import React, { useMemo } from 'react';
 
-import type { ValidatorsCountersResponse, ValidatorsSortingValue } from 'types/api/validators';
+import { ValidatorRole, type ValidatorsCountersResponse, type ValidatorsSortingValue } from 'types/api/validators';
 
 import type { ResourceError } from 'lib/api/resources';
 import * as cookies from 'lib/cookies';
@@ -13,6 +13,7 @@ import type { QueryWithPagesResult } from 'ui/shared/pagination/useQueryWithPage
 import ValidatorsList from 'ui/validators/ValidatorsList';
 import ValidatorsTable from 'ui/validators/ValidatorsTable';
 
+import { useLatestBlock } from './useLatestBlock';
 import sortValidators from './utils';
 
 type Props = {
@@ -40,8 +41,13 @@ const ValidatorsWithFrontendSorting = ({ query, counterQuery, searchTerm }: Prop
   }, []);
 
   const { socketAlert } = useNewValidatorsSocket(query.refetch);
+  const block = useLatestBlock();
+  const list = useMemo(() => data?.items.map(item => ({
+    ...item,
+    role: block?.miner.toLowerCase() === item.validators.toLowerCase() ? ValidatorRole.VERIFYING : item.role,
+  })), [ block, data?.items ]);
 
-  const sortedList = useMemo(() => data?.items.slice().sort(sortValidators(sort)), [ data, sort ]);
+  const sortedList = useMemo(() => list?.slice().sort(sortValidators(sort)), [ list, sort ]);
   const content = sortedList ? (
     <>
       <Show below="lg" ssr={ false }>

@@ -81,4 +81,6 @@ export interface ValidatorResponse {
   validator_rewards: string;
   delegator_rewards: string;
   role: ValidatorRole;
+  lock_block: number;
+  status: number;
 }
