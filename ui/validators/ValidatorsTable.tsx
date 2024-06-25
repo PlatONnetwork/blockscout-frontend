@@ -20,7 +20,7 @@ interface Props {
   isLoading?: boolean;
   socketInfoAlert?: string;
   socketInfoNum?: number;
-  counterData: ValidatorsCountersResponse;
+  counterData?: ValidatorsCountersResponse;
 }
 
 const ValidatorsTable = ({ data, sort, setSorting, isLoading, socketInfoAlert, socketInfoNum, counterData }: Props) => {

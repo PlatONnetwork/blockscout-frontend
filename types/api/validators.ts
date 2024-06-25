@@ -1,7 +1,7 @@
 export enum ValidatorRole {
-  ACTIVE = 0,
-  CANDIDATE = 1,
-  VERIFYING = 2,
+  CANDIDATE,
+  ACTIVE,
+  VERIFYING,
 }
 
 export interface Validator {
@@ -41,7 +41,10 @@ export interface HistoricalValidator {
 
 export interface ValidatorsHistoryResponse {
   items: Array<HistoricalValidator>;
-  next_page_params: null;
+  next_page_params: {
+    block_number: number;
+    items_count: number;
+  } | null;
 }
 
 export interface ValidatorsFilters {

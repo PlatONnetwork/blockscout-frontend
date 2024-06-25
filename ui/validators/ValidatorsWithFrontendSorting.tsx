@@ -42,7 +42,7 @@ const ValidatorsWithFrontendSorting = ({ query, counterQuery, searchTerm }: Prop
   const { socketAlert } = useNewValidatorsSocket(query.refetch);
 
   const sortedList = useMemo(() => data?.items.slice().sort(sortValidators(sort)), [ data, sort ]);
-  const content = sortedList && counterQuery.data ? (
+  const content = sortedList ? (
     <>
       <Show below="lg" ssr={ false }>
         <ValidatorsList data={ sortedList } isLoading={ isPlaceholderData }/>
@@ -54,7 +54,7 @@ const ValidatorsWithFrontendSorting = ({ query, counterQuery, searchTerm }: Prop
           data={ sortedList }
           sort={ sort }
           setSorting={ setSortByValue }
-          isLoading={ isPlaceholderData || counterQuery.isPlaceholderData }
+          isLoading={ isPlaceholderData }
           counterData={ counterQuery.data }
         />
       </Hide>

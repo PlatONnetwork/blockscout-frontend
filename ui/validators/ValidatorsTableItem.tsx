@@ -10,7 +10,7 @@ import { currencyAmountFormatter } from 'ui/shared/validator/utils';
 
 interface Props {
   data: Validator;
-  counterData: ValidatorsCountersResponse;
+  counterData?: ValidatorsCountersResponse;
   isLoading?: boolean;
 }
 
@@ -43,7 +43,7 @@ const ValidatorsTableItem = ({ data, counterData, isLoading }: Props) => {
         <Skeleton isLoaded={ !isLoading } display="inline-block">
           <VStack align="left">
             <Text>{ currencyAmountFormatter(totalBonded.toString()) }</Text>
-            <Text color="#999">{ totalBonded.div(counterData.total_bonded).times(100).toFixed(2) }%</Text>
+            <Text color="#999">{ counterData?.total_bonded ? totalBonded.div(counterData.total_bonded).times(100).toFixed(2) : '-' }%</Text>
           </VStack>
         </Skeleton>
       </Td>

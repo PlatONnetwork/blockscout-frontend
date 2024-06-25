@@ -44,7 +44,7 @@ const ValidatorsHistoryTable = ({ data, isLoading, socketInfoAlert, socketInfoNu
           <AnimatePresence initial={ false }>
             { data.map((item, index) => (
               <ValidatorsHistoryTableItem
-                key={ String(item.no) + (isLoading ? index : '') }
+                key={ String(item.validators) + (isLoading ? index : '') }
                 data={ item }
                 isLoading={ isLoading }/>
             )) }
