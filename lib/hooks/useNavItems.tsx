@@ -4,7 +4,7 @@ import React from 'react';
 import type { NavItemInternal, NavItem, NavGroupItem } from 'types/client/navigation-items';
 
 import config from 'configs/app';
-import { rightLineArrow } from 'lib/html-entities';
+// import { rightLineArrow } from 'lib/html-entities';
 import UserAvatar from 'ui/shared/UserAvatar';
 
 interface ReturnType {
@@ -54,18 +54,18 @@ export default function useNavItems(): ReturnType {
        icon: 'verified',
        isActive: pathname === '/verified-contracts',
      };
-    const rollupDeposits = {
-      text: `L1${ rightLineArrow }L2 Transactions`,
-      nextRoute: { pathname: '/deposits' as const },
-      icon: 'arrows/south-east',
-      isActive: pathname === '/deposits',
-    };
-    const rollupWithdrawals = {
-      text: `L2${ rightLineArrow }L1 Transactions`,
-      nextRoute: { pathname: '/withdrawals' as const },
-      icon: 'arrows/north-east',
-      isActive: pathname === '/withdrawals',
-    };
+    // const rollupDeposits = {
+    //   text: `L1${ rightLineArrow }L2 Transactions`,
+    //   nextRoute: { pathname: '/deposits' as const },
+    //   icon: 'arrows/south-east',
+    //   isActive: pathname === '/deposits',
+    // };
+    // const rollupWithdrawals = {
+    //   text: `L2${ rightLineArrow }L1 Transactions`,
+    //   nextRoute: { pathname: '/withdrawals' as const },
+    //   icon: 'arrows/north-east',
+    //   isActive: pathname === '/withdrawals',
+    // };
     // const appChainTxnBatchesL1: NavItem = {
     //   text: 'L1 States Batches',
     //   nextRoute: { pathname: '/batches-deposits' as const },
@@ -79,18 +79,18 @@ export default function useNavItems(): ReturnType {
     //   isActive: pathname === '/batches-withdrawals',
     // };
 
-    blockchainNavItems = blockchainNavItems = [
+    blockchainNavItems = [
       [
         txs,
-        rollupDeposits,
-        rollupWithdrawals,
-      ],
-      [
+        // rollupDeposits,
+        // rollupWithdrawals,
+        // ],
+        // [
         blocks,
         // appChainTxnBatchesL1, // L1 batches
         // appChainTxnBatchesL2, // L2 batches
-      ],
-      [
+        // ],
+        // [
         topAccounts,
         verifiedContracts,
       ].filter(Boolean),
