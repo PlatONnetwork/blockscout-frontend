@@ -1,4 +1,4 @@
-import { Flex, Grid, Text } from '@chakra-ui/react';
+import { Grid } from '@chakra-ui/react';
 import BigNumber from 'bignumber.js';
 import React from 'react';
 
@@ -157,7 +157,7 @@ const Stats = () => {
           />
         ) }
 
-        <StatsItem
+        { /* <StatsItem
           icon="gas"
           title="Total Supply"
           value={ Number(data.total_supply || 0).toLocaleString() }
@@ -187,7 +187,7 @@ const Stats = () => {
           value={ Number(data.validator_count).toLocaleString() }
           url={ route({ pathname: '/validators' }) }
           isLoading={ isLoading }
-        />
+        /> */ }
         { /* <StatsItem
           icon="transactions"
           title="Next L2 State Batch Block"

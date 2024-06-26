@@ -28,4 +28,5 @@ export const VALIDATOR_HISTORY: HistoricalValidator = {
   status: 0,
   exit_timestamp: '2020-10-17T22:27:00.000000Z',
   validators: '0x1dd26dfb60b996fd5d5152af723949971d9119ee',
+  lock_block: 0,
 };

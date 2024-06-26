@@ -19,6 +19,8 @@ export const VALIDATOR_DETAIL: ValidatorResponse = {
   website: null,
   block_rate: 0,
   role: 0,
+  lock_block: 0,
+  status: 0,
 };
 
 export const VALIDATOR_STAKING: ValidatorStaking = {
