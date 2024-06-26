@@ -6,7 +6,7 @@ import type { ValidatorBlock } from 'types/api/validator';
 import dayjs from 'lib/date/dayjs';
 import BlockEntity from 'ui/shared/entities/block/BlockEntity';
 import Utilization from 'ui/shared/Utilization/Utilization';
-import { currencyAmountFormatter, formatNumberValue, toLocaleStringFormatter } from 'ui/shared/validator/utils';
+import { currencyAmountFormatter } from 'ui/shared/validator/utils';
 
 interface Props {
   data: ValidatorBlock;
@@ -36,7 +36,7 @@ const ValidatorBlocksTableItem = ({ data, isLoading }: Props) => {
         <HStack gap="10px">
           <Skeleton isLoaded={ !isLoading } display="inline-block">
             <Text>
-              { formatNumberValue(data.gas_used, toLocaleStringFormatter) }
+              { Number(data.gas_used).toLocaleString() }
             </Text>
           </Skeleton>
           <Utilization

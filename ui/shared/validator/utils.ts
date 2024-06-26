@@ -6,7 +6,10 @@ export const formatNumberValue = (value: string | number | undefined | null, for
   return value !== undefined && value !== null && !Number.isNaN(Number(value)) ? String(formatter?.(value) || value) : '-';
 };
 
-export const toLocaleStringFormatter = (value: string | number) => Number(value).toLocaleString();
+export const toLocaleStringFormatter = (value: string | number) => Number(value).toLocaleString(
+  undefined,
+  { maximumFractionDigits: config.chain.currency.decimals },
+);
 export const percentageFormatter = (value: string | number) => (Number(value) * 100).toFixed(2) + '%';
 
 export const divDecimals = (value: string | number) => new BigNumber(value).div(10 ** config.chain.currency.decimals).toFixed();

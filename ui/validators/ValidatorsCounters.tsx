@@ -1,5 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import type { UseQueryResult } from '@tanstack/react-query';
+import BigNumber from 'bignumber.js';
 import React, { useMemo } from 'react';
 
 import type { ValidatorsCountersResponse } from 'types/api/validators';
@@ -43,6 +44,7 @@ const ValidatorsCounters = ({ query }: Props) => {
         label={ `Total Bonded(${ config.chain.currency.symbol })` }
         value={ currencyAmountFormatter(data.total_bonded) }
         diff={ divDecimals(data.total_bonded_24_hours) }
+        diffFormatted={ currencyAmountFormatter(new BigNumber(data.total_bonded_24_hours).abs().toString()) }
         diffPeriod="24h"
         isLoading={ isPlaceholderData }
       />
