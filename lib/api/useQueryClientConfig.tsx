@@ -1,5 +1,6 @@
 import { QueryClient } from '@tanstack/react-query';
 import React from 'react';
+import { hashFn } from 'wagmi/query';
 
 import getErrorObjPayload from 'lib/errors/getErrorObjPayload';
 import getErrorObjStatusCode from 'lib/errors/getErrorObjStatusCode';
@@ -18,6 +19,7 @@ export default function useQueryClientConfig() {
   const [ queryClient ] = React.useState(() => new QueryClient({
     defaultOptions: {
       queries: {
+        queryKeyHashFn: hashFn,
         refetchOnWindowFocus: false,
         retry,
         throwOnError: (error) => {
