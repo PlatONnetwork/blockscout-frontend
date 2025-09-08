@@ -1,36 +1,38 @@
 import { Table, Tbody, Th, Tr } from '@chakra-ui/react';
 import React from 'react';
 
-import type { PlatonL2WithdrawalsItem } from 'types/api/platonL2';
+import type { PlatonAppchainWithdrawalsItem } from 'types/api/platonAppchain';
 
 import { default as Thead } from 'ui/shared/TheadSticky';
 
-import PlatonL2WithdrawalsTableItem from './PlatonL2WithdrawalsTableItem';
+import PlatonAppchainWithdrawalsTableItem from './PlatonAppchainWithdrawalsTableItem';
 
  type Props = {
-   items: Array<PlatonL2WithdrawalsItem>;
+   items: Array<PlatonAppchainWithdrawalsItem>;
    top: number;
    isLoading?: boolean;
  }
 
-const PlatonL2WithdrawalsTable = ({ items, top, isLoading }: Props) => {
+const PlatonAppchainWithdrawalsTable = ({ items, top, isLoading }: Props) => {
   return (
     <Table variant="simple" size="sm" style={{ tableLayout: 'auto' }} minW="950px">
       <Thead top={ top }>
         <Tr>
-          <Th>Msg nonce</Th>
+          <Th>State batches index</Th>
           <Th>From</Th>
+          <Th>L1 txn hash</Th>
           <Th>L2 txn hash</Th>
           <Th>Age</Th>
+          <Th>State root</Th>
+          <Th>State batches txn hash</Th>
           <Th>Status</Th>
-          <Th>L1 txn hash</Th>
-          <Th>Time left</Th>
+          <Th>Type</Th>
         </Tr>
       </Thead>
       <Tbody>
         { items.map((item, index) => (
-          <PlatonL2WithdrawalsTableItem
-            key={ String(item.msg_nonce_version) + item.msg_nonce + (isLoading ? index : '') }
+          <PlatonAppchainWithdrawalsTableItem
+            key={ String(item.no) + item.state_batches_index + (isLoading ? index : '') }
             item={ item }
             isLoading={ isLoading }
           />
@@ -40,4 +42,4 @@ const PlatonL2WithdrawalsTable = ({ items, top, isLoading }: Props) => {
   );
 };
 
-export default PlatonL2WithdrawalsTable;
+export default PlatonAppchainWithdrawalsTable;

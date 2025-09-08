@@ -4,7 +4,7 @@ import React from 'react';
 import type { NavItemInternal, NavItem, NavGroupItem } from 'types/client/navigation-items';
 
 import config from 'configs/app';
-// import { rightLineArrow } from 'lib/html-entities';
+import { rightLineArrow } from 'lib/html-entities';
 import UserAvatar from 'ui/shared/UserAvatar';
 
 interface ReturnType {
@@ -46,6 +46,12 @@ export default function useNavItems(): ReturnType {
       icon: 'transactions',
       isActive: pathname === '/txs' || pathname === '/tx/[hash]',
     };
+    const userOps: NavItem | null = config.features.userOps.isEnabled ? {
+      text: 'User operations',
+      nextRoute: { pathname: '/ops' as const },
+      icon: 'user_op',
+      isActive: pathname === '/ops' || pathname === '/op/[hash]',
+    } : null;
 
     const verifiedContracts: NavItem | null =
      {
@@ -54,18 +60,30 @@ export default function useNavItems(): ReturnType {
        icon: 'verified',
        isActive: pathname === '/verified-contracts',
      };
-    // const rollupDeposits = {
-    //   text: `L1${ rightLineArrow }L2 Transactions`,
-    //   nextRoute: { pathname: '/deposits' as const },
-    //   icon: 'arrows/south-east',
-    //   isActive: pathname === '/deposits',
-    // };
-    // const rollupWithdrawals = {
-    //   text: `L2${ rightLineArrow }L1 Transactions`,
-    //   nextRoute: { pathname: '/withdrawals' as const },
-    //   icon: 'arrows/north-east',
-    //   isActive: pathname === '/withdrawals',
-    // };
+    const ensLookup = config.features.nameService.isEnabled ? {
+      text: 'Name services lookup',
+      nextRoute: { pathname: '/name-domains' as const },
+      icon: 'ENS',
+      isActive: pathname === '/name-domains' || pathname === '/name-domains/[name]',
+    } : null;
+    const validators = config.features.validators.isEnabled ? {
+      text: 'Top validators',
+      nextRoute: { pathname: '/validators' as const },
+      icon: 'validator',
+      isActive: pathname === '/validators',
+    } : null;
+    const rollupDeposits = {
+      text: `L1${ rightLineArrow }L2 Transactions`,
+      nextRoute: { pathname: '/deposits' as const },
+      icon: 'arrows/south-east',
+      isActive: pathname === '/deposits',
+    };
+    const rollupWithdrawals = {
+      text: `L2${ rightLineArrow }L1 Transactions`,
+      nextRoute: { pathname: '/withdrawals' as const },
+      icon: 'arrows/north-east',
+      isActive: pathname === '/withdrawals',
+    };
     // const appChainTxnBatchesL1: NavItem = {
     //   text: 'L1 States Batches',
     //   nextRoute: { pathname: '/batches-deposits' as const },
@@ -79,22 +97,81 @@ export default function useNavItems(): ReturnType {
     //   isActive: pathname === '/batches-withdrawals',
     // };
 
-    blockchainNavItems = [
-      [
+    const rollupFeature = config.features.rollup;
+
+    if (rollupFeature.isEnabled && (rollupFeature.type === 'optimistic' || rollupFeature.type === 'zkEvm')) {
+      blockchainNavItems = [
+        [
+          txs,
+          rollupDeposits,
+          rollupWithdrawals,
+        ],
+        [
+          blocks,
+          rollupTxnBatches,
+          rollupFeature.type === 'optimistic' ? rollupOutputRoots : undefined,
+        ].filter(Boolean),
+        [
+          userOps,
+          topAccounts,
+          validators,
+          verifiedContracts,
+          ensLookup,
+        ].filter(Boolean),
+      ];
+    } else if (rollupFeature.isEnabled && rollupFeature.type === 'shibarium') {
+      blockchainNavItems = [
+        [
+          txs,
+          rollupDeposits,
+          rollupWithdrawals,
+        ],
+        [
+          blocks,
+          userOps,
+          topAccounts,
+          verifiedContracts,
+          ensLookup,
+        ].filter(Boolean),
+      ];
+    } else if (rollupFeature.isEnabled && rollupFeature.type === 'zkSync') {
+      blockchainNavItems = [
+        [
+          txs,
+          userOps,
+          blocks,
+          rollupTxnBatches,
+        ].filter(Boolean),
+        [
+          topAccounts,
+          validators,
+          verifiedContracts,
+          ensLookup,
+        ].filter(Boolean),
+      ];
+    } else if (rollupFeature.isEnabled && rollupFeature.type === 'platonappchain') {
+      blockchainNavItems = [
+        [
+          txs,
+          rollupDeposits,
+          rollupWithdrawals,
+        ],
+        [
+          blocks,
+          userOps,
+          topAccounts,
+          verifiedContracts,
+          ensLookup,
+        ].filter(Boolean),
+      ];
+    } else {
+      blockchainNavItems = [
         txs,
-        // rollupDeposits,
-        // rollupWithdrawals,
-        // ],
-        // [
         blocks,
-        // appChainTxnBatchesL1, // L1 batches
-        // appChainTxnBatchesL2, // L2 batches
-        // ],
-        // [
         topAccounts,
         verifiedContracts,
-      ].filter(Boolean),
-    ];
+      ].filter(Boolean);
+    }
 
     const apiNavItems: Array<NavItem> = [
       config.features.restApiDocs.isEnabled ? {

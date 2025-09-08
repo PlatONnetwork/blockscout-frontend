@@ -36,7 +36,7 @@ function getPaginationParamsFromQuery(queryString: string | Array<string> | unde
   return {};
 }
 
-function getNextPageParams<R extends PaginatedResources>(data: ResourcePayload<R> | undefined) {
+function getNextPageParams<R extends PaginatedResources>(data: ResourcePayload<R> | undefined | null) {
   if (!data || typeof data !== 'object' || !('next_page_params' in data)) {
     return;
   }

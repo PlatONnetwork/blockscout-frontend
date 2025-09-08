@@ -66,7 +66,13 @@ import type {
   OptimisticL2TxnBatchesResponse,
   OptimisticL2WithdrawalsResponse,
 } from 'types/api/optimisticL2';
-import type { PlatonL2DepositsResponse, PlatonL2WithdrawalsResponse } from 'types/api/platonL2';
+import type {
+  PlatonAppchainDepositsResponse,
+  // PlatonAppchainDepositsItem,
+  PlatonAppchainWithdrawalsResponse,
+  PlatonAppchainDepositsBatchesResponse,
+  PlatonAppchainWithdrawalsBatchesResponse,
+} from 'types/api/platonAppchain';
 import type { RawTracesResponse } from 'types/api/rawTrace';
 import type { SearchRedirectResult, SearchResult, SearchResultFilters, SearchResultItem } from 'types/api/search';
 import type { ShibariumWithdrawalsResponse, ShibariumDepositsResponse } from 'types/api/shibarium';
@@ -622,6 +628,43 @@ export const RESOURCES = {
     path: '/api/v2/search/check-redirect',
   },
 
+  // platon-appchain l2
+  platonappchain_deposits: {
+    path: '/api/v2/platon-appchain/deposits',
+    filterFields: [],
+  },
+
+  platonappchain_deposits_count: {
+    path: '/api/v2/platon-appchain/deposits/count',
+  },
+
+  platonappchain_withdrawals: {
+    path: '/api/v2/platon-appchain/withdrawals',
+    filterFields: [],
+  },
+
+  platonappchain_withdrawals_count: {
+    path: '/api/v2/platon-appchain/withdrawals/count',
+  },
+
+  platonappchain_deposits_batches: {
+    path: '/api/v2/platon-appchain/deposits-batches',
+    filterFields: [],
+  },
+
+  platonappchain_deposits_batches_count: {
+    path: '/api/v2/platon-appchain/deposits-batches/count',
+  },
+
+  platonappchain_withdrawals_batches: {
+    path: '/api/v2/platon-appchain/withdrawals-batches',
+    filterFields: [],
+  },
+
+  platonappchain_withdrawals_batches_count: {
+    path: '/api/v2/platon-appchain/withdrawals-batches/count',
+  },
+
   // optimistic L2
   optimistic_l2_deposits: {
     path: '/api/v2/optimism/deposits',
@@ -901,6 +944,7 @@ export type PaginatedResources = 'blocks' | 'block_txs' |
 'token_transfers' | 'token_holders' | 'token_inventory' | 'tokens' | 'tokens_bridged' |
 'token_instance_transfers' | 'token_instance_holders' |
 'verified_contracts' |
+'platonappchain_deposits' | 'platonappchain_withdrawals' | 'platonappchain_deposits_batches' | 'platonappchain_withdrawals_batches' |
 'optimistic_l2_output_roots' | 'optimistic_l2_withdrawals' | 'optimistic_l2_txn_batches' | 'optimistic_l2_deposits' |
 'shibarium_deposits' | 'shibarium_withdrawals' |
 'zkevm_l2_deposits' | 'zkevm_l2_withdrawals' | 'zkevm_l2_txn_batches' | 'zkevm_l2_txn_batch_txs' |
@@ -908,7 +952,6 @@ export type PaginatedResources = 'blocks' | 'block_txs' |
 'withdrawals' | 'address_withdrawals' | 'block_withdrawals' |
 'watchlist' | 'private_tags_address' | 'private_tags_tx' |
 'domains_lookup' | 'addresses_lookup' | 'user_ops' | 'validators' | 'validators_history' | 'noves_address_history' |
-'platon_l2_deposits' | 'platon_l2_withdrawals' |
 'validator_staking' | 'validator_blocks' | 'validator_action' | 'validator_delegator';
 
 export type PaginatedResponse<Q extends PaginatedResources> = ResourcePayload<Q>;
@@ -1031,6 +1074,14 @@ Q extends 'validator_staking' ? ValidatorStakingResponse :
 Q extends 'validator_blocks' ? ValidatorBlocksResponse :
 Q extends 'validator_action' ? ValidatorActionResponse :
 Q extends 'validator_delegator' ? ValidatorDelegatorResponse :
+Q extends 'platonappchain_withdrawals' ? PlatonAppchainWithdrawalsResponse :
+Q extends 'platonappchain_deposits' ? PlatonAppchainDepositsResponse :
+Q extends 'platonappchain_withdrawals_batches' ? PlatonAppchainWithdrawalsBatchesResponse :
+Q extends 'platonappchain_deposits_batches' ? PlatonAppchainDepositsBatchesResponse :
+Q extends 'platonappchain_deposits_count' ? number :
+Q extends 'platonappchain_withdrawals_count' ? number :
+Q extends 'platonappchain_deposits_batches_count' ? number :
+Q extends 'platonappchain_withdrawals_batches_count' ? number :
 Q extends 'shibarium_withdrawals' ? ShibariumWithdrawalsResponse :
 Q extends 'shibarium_deposits' ? ShibariumDepositsResponse :
 Q extends 'shibarium_withdrawals_count' ? number :
@@ -1059,10 +1110,6 @@ Q extends 'user_op_interpretation'? TxInterpretationResponse :
 Q extends 'noves_transaction' ? NovesResponseData :
 Q extends 'noves_address_history' ? NovesAccountHistoryResponse :
 Q extends 'noves_describe_txs' ? NovesDescribeTxsResponse :
-Q extends 'platon_l2_withdrawals' ? PlatonL2WithdrawalsResponse :
-Q extends 'platon_l2_withdrawals_count' ? number :
-Q extends 'platon_l2_deposits' ? PlatonL2DepositsResponse :
-Q extends 'platon_l2_deposits_count' ? number :
 never;
 /* eslint-enable @typescript-eslint/indent */
 

@@ -68,8 +68,8 @@ export const verifiedAddresses: GetServerSideProps<Props> = async(context) => {
 };
 
 export const deposits: GetServerSideProps<Props> = async(context) => {
-  if (!(rollupFeature.isEnabled && (rollupFeature.type === 'optimistic' || rollupFeature.type === 'shibarium' ||
-  rollupFeature.type === 'zkEvm' || rollupFeature.type === 'platon-appchain'))) {
+  if (!(rollupFeature.isEnabled && (rollupFeature.type === 'platonappchain' || rollupFeature.type === 'optimistic' ||
+      rollupFeature.type === 'shibarium' || rollupFeature.type === 'zkEvm'))) {
     return {
       notFound: true,
     };
@@ -81,8 +81,8 @@ export const deposits: GetServerSideProps<Props> = async(context) => {
 export const withdrawals: GetServerSideProps<Props> = async(context) => {
   if (
     !config.features.beaconChain.isEnabled &&
-    !(rollupFeature.isEnabled && (rollupFeature.type === 'optimistic' || rollupFeature.type === 'shibarium' ||
-     rollupFeature.type === 'zkEvm' || rollupFeature.type === 'platon-appchain'))
+    !(rollupFeature.isEnabled && (rollupFeature.type === 'platonappchain' || rollupFeature.type === 'optimistic' ||
+        rollupFeature.type === 'shibarium' || rollupFeature.type === 'zkEvm'))
   ) {
     return {
       notFound: true,
