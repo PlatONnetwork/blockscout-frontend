@@ -9,6 +9,9 @@ const rollupFeature = config.features.rollup;
 const beaconChainFeature = config.features.beaconChain;
 
 const Withdrawals = dynamic(() => {
+  if (rollupFeature.isEnabled && rollupFeature.type === 'platonappchain') {
+    return import('ui/pages/PlatonAppchainWithdrawals');
+  }
   if (rollupFeature.isEnabled && rollupFeature.type === 'optimistic') {
     return import('ui/pages/OptimisticL2Withdrawals');
   }

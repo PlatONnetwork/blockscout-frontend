@@ -8,6 +8,10 @@ import config from 'configs/app';
 const rollupFeature = config.features.rollup;
 
 const Deposits = dynamic(() => {
+  if (rollupFeature.isEnabled && rollupFeature.type === 'platonappchain') {
+    return import('ui/pages/PlatonAppchainDeposits');
+  }
+
   if (rollupFeature.isEnabled && rollupFeature.type === 'optimistic') {
     return import('ui/pages/OptimisticL2Deposits');
   }

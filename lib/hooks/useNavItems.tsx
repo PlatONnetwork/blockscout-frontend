@@ -149,6 +149,21 @@ export default function useNavItems(): ReturnType {
           ensLookup,
         ].filter(Boolean),
       ];
+    } else if (rollupFeature.isEnabled && rollupFeature.type === 'platonappchain') {
+      blockchainNavItems = [
+        [
+          txs,
+          rollupDeposits,
+          rollupWithdrawals,
+        ],
+        [
+          blocks,
+          userOps,
+          topAccounts,
+          verifiedContracts,
+          ensLookup,
+        ].filter(Boolean),
+      ];
     } else {
       blockchainNavItems = [
         txs,
