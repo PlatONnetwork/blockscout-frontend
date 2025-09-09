@@ -25,13 +25,14 @@ const PlatonAppchainWithdrawals = () => {
 
   const content = data?.items ? (
     <>
-      <Show below="lg" ssr={ false }>{ data.items.map(((item, index) => (
-        <PlatonAppchainWithdrawalsListItem
-          key={ String(item.no) + item.state_batches_index + (isPlaceholderData ? index : '') }
-          item={ item }
-          isLoading={ isPlaceholderData }
-        />
-      ))) }</Show>
+      <Show below="lg" ssr={ false }>{
+        data.items.map(((item, index) => (
+          <PlatonAppchainWithdrawalsListItem
+            key={ String(item.no) + item.state_batches_index + (isPlaceholderData ? index : '') }
+            item={ item }
+            isLoading={ isPlaceholderData }
+          />
+        ))) }</Show>
       <Hide below="lg" ssr={ false }>
         <PlatonAppchainWithdrawalsTable items={ data.items } top={ pagination.isVisible ? ACTION_BAR_HEIGHT_DESKTOP : 0 } isLoading={ isPlaceholderData }/>
       </Hide>
@@ -54,10 +55,6 @@ const PlatonAppchainWithdrawals = () => {
   })();
 
   const actionBar = <StickyPaginationWithText text={ text } pagination={ pagination }/>;
-
-  if (!content) {
-    return;
-  }
 
   return (
     <>

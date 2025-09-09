@@ -885,23 +885,6 @@ export const RESOURCES = {
   graphql: {
     path: '/api/v1/graphql',
   },
-  // PlatON L2
-  platon_l2_deposits: {
-    path: '/api/v2/platon-appchain/deposits',
-  },
-
-  platon_l2_deposits_count: {
-    path: '/api/v2/platon-appchain/deposits/count',
-  },
-
-  platon_l2_withdrawals: {
-    path: '/api/v2/platon-appchain/withdrawals',
-  },
-
-  platon_l2_withdrawals_count: {
-    path: '/api/v2/platon-appchain/withdrawals/count',
-  },
-
 };
 
 export type ResourceName = keyof typeof RESOURCES;

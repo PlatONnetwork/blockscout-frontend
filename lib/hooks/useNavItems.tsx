@@ -84,18 +84,18 @@ export default function useNavItems(): ReturnType {
       icon: 'arrows/north-east',
       isActive: pathname === '/withdrawals',
     };
-    // const appChainTxnBatchesL1: NavItem = {
-    //   text: 'L1 States Batches',
-    //   nextRoute: { pathname: '/batches-deposits' as const },
-    //   icon: 'txn_batches',
-    //   isActive: pathname === '/batches-deposits',
-    // };
-    // const appChainTxnBatchesL2: NavItem = {
-    //   text: 'L2 States Batches',
-    //   nextRoute: { pathname: '/batches-withdrawals' as const },
-    //   icon: 'txn_batches',
-    //   isActive: pathname === '/batches-withdrawals',
-    // };
+    const rollupTxnBatches = {
+      text: 'Txn batches',
+      nextRoute: { pathname: '/batches' as const },
+      icon: 'txn_batches',
+      isActive: pathname === '/batches',
+    };
+    const rollupOutputRoots = {
+      text: 'Output roots',
+      nextRoute: { pathname: '/output-roots' as const },
+      icon: 'output_roots',
+      isActive: pathname === '/output-roots',
+    };
 
     const rollupFeature = config.features.rollup;
 

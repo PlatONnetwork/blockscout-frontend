@@ -32,6 +32,6 @@ const config: Feature<{ type: RollupType; L1BaseUrl: string; L2WithdrawalUrl?: s
   });
 })();
 
-export const isPlatonAppChain = config.isEnabled && config.type === 'platon-appchain';
+export const isPlatonAppChain = config.isEnabled && config.type === 'platonappchain';
 
 export default config;
