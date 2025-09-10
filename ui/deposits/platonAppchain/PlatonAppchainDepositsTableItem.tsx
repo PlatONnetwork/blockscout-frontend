@@ -1,4 +1,5 @@
 import { Td, Tr, Skeleton, Flex } from '@chakra-ui/react';
+import BigNumber from 'bignumber.js';
 import React from 'react';
 
 import type { PlatonAppchainDepositsItem } from 'types/api/platonAppchain';
@@ -6,11 +7,11 @@ import { DEPOSIT_TX_TYPE, STATUSES } from 'types/api/platonAppchain';
 
 import config from 'configs/app';
 import dayjs from 'lib/date/dayjs';
+import CopyToClipboard from 'ui/shared/CopyToClipboard';
+import BlockEntityL1 from 'ui/shared/entities/block/BlockEntityL1';
 import TxEntity from 'ui/shared/entities/tx/TxEntity';
 import TxEntityL1 from 'ui/shared/entities/tx/TxEntityL1';
-
-import CopyToClipboard from '../../shared/CopyToClipboard';
-import HashStringShorten from '../../shared/HashStringShorten';
+import HashStringShorten from 'ui/shared/HashStringShorten';
 
 const rollupFeature = config.features.rollup;
 
@@ -25,6 +26,21 @@ const PlatonAppchainDepositsTableItem = ({ item, isLoading }: Props) => {
 
   return (
     <Tr>
+      <Td verticalAlign="middle">
+        <Skeleton isLoaded={ !isLoading } color="text_secondary" display="inline-block">
+          <span>{ item.no }</span>
+        </Skeleton>
+      </Td>
+      <Td verticalAlign="middle">
+        <BlockEntityL1
+          number={ item.l1_block_number }
+          isLoading={ isLoading }
+          fontSize="sm"
+          lineHeight={ 5 }
+          fontWeight={ 600 }
+          noIcon
+        />
+      </Td>
       <Td verticalAlign="middle">
         <TxEntityL1
           isLoading={ isLoading }
@@ -45,13 +61,13 @@ const PlatonAppchainDepositsTableItem = ({ item, isLoading }: Props) => {
           lineHeight={ 5 }
         />
       </Td>
+      <Td>
+        <Skeleton isLoaded={ !isLoading } color="text_secondary" my={ 1 } display="inline-block">
+          <span>{ BigNumber(item.l1_amount).div(BigNumber(10 ** 18)).toFormat() }</span>
+        </Skeleton>
+      </Td>
       <Td verticalAlign="middle" pr={ 12 }>
         <Skeleton isLoaded={ !isLoading } color="text_secondary" display="inline-block"><span>{ timeAgo }</span></Skeleton>
-      </Td>
-      <Td verticalAlign="middle">
-        <Skeleton isLoaded={ !isLoading } color="text_secondary" display="inline-block">
-          <span>{ item.state_batches_index }</span>
-        </Skeleton>
       </Td>
       <Td verticalAlign="middle">
         <TxEntity

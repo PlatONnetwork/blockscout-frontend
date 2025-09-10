@@ -1,4 +1,5 @@
 import { Flex, Skeleton } from '@chakra-ui/react';
+import BigNumber from 'bignumber.js';
 import React from 'react';
 
 import type { PlatonAppchainDepositsItem } from 'types/api/platonAppchain';
@@ -6,12 +7,12 @@ import { DEPOSIT_TX_TYPE, STATUSES } from 'types/api/platonAppchain';
 
 import config from 'configs/app';
 import dayjs from 'lib/date/dayjs';
+import CopyToClipboard from 'ui/shared/CopyToClipboard';
+import BlockEntityL1 from 'ui/shared/entities/block/BlockEntityL1';
 import TxEntity from 'ui/shared/entities/tx/TxEntity';
 import TxEntityL1 from 'ui/shared/entities/tx/TxEntityL1';
+import HashStringShorten from 'ui/shared/HashStringShorten';
 import ListItemMobileGrid from 'ui/shared/ListItemMobile/ListItemMobileGrid';
-
-import CopyToClipboard from '../../shared/CopyToClipboard';
-import HashStringShorten from '../../shared/HashStringShorten';
 
 const rollupFeature = config.features.rollup;
 
@@ -27,6 +28,22 @@ const PlatonAppchainDepositsListItem = ({ item, isLoading }: Props) => {
   return (
     <ListItemMobileGrid.Container>
 
+      <ListItemMobileGrid.Label isLoading={ isLoading }>No</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Value>
+        <Skeleton isLoaded={ !isLoading } display="inline-block">{ item.no }</Skeleton>
+      </ListItemMobileGrid.Value>
+
+      <ListItemMobileGrid.Label isLoading={ isLoading }>L1 block Number</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Value>
+        <BlockEntityL1
+          number={ item.l1_block_number }
+          isLoading={ isLoading }
+          fontSize="sm"
+          lineHeight={ 5 }
+          fontWeight={ 600 }
+        />
+      </ListItemMobileGrid.Value>
+
       <ListItemMobileGrid.Label isLoading={ isLoading }>L1 txn hash</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <TxEntityL1
@@ -38,7 +55,7 @@ const PlatonAppchainDepositsListItem = ({ item, isLoading }: Props) => {
         />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>L2 event hash</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>L2 txn hash</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <TxEntity
           isLoading={ isLoading }
@@ -49,17 +66,17 @@ const PlatonAppchainDepositsListItem = ({ item, isLoading }: Props) => {
         />
       </ListItemMobileGrid.Value>
 
+      <ListItemMobileGrid.Label isLoading={ isLoading }>Value</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Value>
+        <Skeleton isLoaded={ !isLoading } display="inline-block">{ BigNumber(item.l1_amount).div(BigNumber(10 ** 18)).toFormat() }</Skeleton>
+      </ListItemMobileGrid.Value>
+
       <ListItemMobileGrid.Label isLoading={ isLoading }>Age</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Skeleton isLoaded={ !isLoading } display="inline-block">{ timeAgo }</Skeleton>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>state batches index</ListItemMobileGrid.Label>
-      <ListItemMobileGrid.Value>
-        <Skeleton isLoaded={ !isLoading } display="inline-block">{ item.state_batches_index }</Skeleton>
-      </ListItemMobileGrid.Value>
-
-      <ListItemMobileGrid.Label isLoading={ isLoading }>state batches txn hash</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>State batches txn hash</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <TxEntity
           isLoading={ isLoading }
@@ -70,7 +87,7 @@ const PlatonAppchainDepositsListItem = ({ item, isLoading }: Props) => {
         />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>state root</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>State root</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Flex overflow="hidden" whiteSpace="nowrap" alignItems="center" w="100%" justifyContent="start">
           <Skeleton isLoaded={ !isLoading } color="text_secondary">
@@ -80,12 +97,12 @@ const PlatonAppchainDepositsListItem = ({ item, isLoading }: Props) => {
         </Flex>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>status</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>Status</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Skeleton isLoaded={ !isLoading } display="inline-block">{ STATUSES[item.status] }</Skeleton>
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>type</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>Type</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Skeleton isLoaded={ !isLoading } display="inline-block">{ DEPOSIT_TX_TYPE[ Number(item.tx_type) - 1 ] }</Skeleton>
       </ListItemMobileGrid.Value>

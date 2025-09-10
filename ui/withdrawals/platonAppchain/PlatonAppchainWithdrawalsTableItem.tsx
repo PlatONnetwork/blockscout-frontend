@@ -1,4 +1,5 @@
 import { Td, Tr, Skeleton, Flex } from '@chakra-ui/react';
+import BigNumber from 'bignumber.js';
 import React from 'react';
 
 import type { PlatonAppchainWithdrawalsItem } from 'types/api/platonAppchain';
@@ -6,12 +7,11 @@ import { WITHDRAWAL_TX_TYPE, STATUSES } from 'types/api/platonAppchain';
 
 import config from 'configs/app';
 import dayjs from 'lib/date/dayjs';
+import CopyToClipboard from 'ui/shared/CopyToClipboard';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import TxEntity from 'ui/shared/entities/tx/TxEntity';
 import TxEntityL1 from 'ui/shared/entities/tx/TxEntityL1';
-
-import CopyToClipboard from '../../shared/CopyToClipboard';
-import HashStringShorten from '../../shared/HashStringShorten';
+import HashStringShorten from 'ui/shared/HashStringShorten';
 
 const rollupFeature = config.features.rollup;
 
@@ -31,7 +31,7 @@ const PlatonAppchainWithdrawalsTableItem = ({ item, isLoading }: Props) => {
   return (
     <Tr>
       <Td verticalAlign="middle" fontWeight={ 600 }>
-        <Skeleton isLoaded={ !isLoading } display="inline-block">{ item.state_batches_index }</Skeleton>
+        <Skeleton isLoaded={ !isLoading } display="inline-block">{ item.epoch }</Skeleton>
       </Td>
       <Td verticalAlign="middle">
         { item.from ? (
@@ -65,6 +65,11 @@ const PlatonAppchainWithdrawalsTableItem = ({ item, isLoading }: Props) => {
             noIcon
           />
         ) : 'N/A' }
+      </Td>
+      <Td>
+        <Skeleton isLoaded={ !isLoading } color="text_secondary" my={ 1 } display="inline-block">
+          <span>{ BigNumber(item.l2_amount).div(BigNumber(10 ** 18)).toFormat() }</span>
+        </Skeleton>
       </Td>
       <Td verticalAlign="middle" pr={ 12 }>
         <Skeleton isLoaded={ !isLoading } color="text_secondary" display="inline-block">

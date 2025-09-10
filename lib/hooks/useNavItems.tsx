@@ -73,13 +73,13 @@ export default function useNavItems(): ReturnType {
       isActive: pathname === '/validators',
     } : null;
     const rollupDeposits = {
-      text: `L1${ rightLineArrow }L2 Transactions`,
+      text: `Deposits (L1${ rightLineArrow }L2)`,
       nextRoute: { pathname: '/deposits' as const },
       icon: 'arrows/south-east',
       isActive: pathname === '/deposits',
     };
     const rollupWithdrawals = {
-      text: `L2${ rightLineArrow }L1 Transactions`,
+      text: `Withdrawals (L2${ rightLineArrow }L1)`,
       nextRoute: { pathname: '/withdrawals' as const },
       icon: 'arrows/north-east',
       isActive: pathname === '/withdrawals',
@@ -158,6 +158,7 @@ export default function useNavItems(): ReturnType {
         ],
         [
           blocks,
+          rollupTxnBatches,
           userOps,
           topAccounts,
           verifiedContracts,

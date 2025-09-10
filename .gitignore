@@ -45,6 +45,8 @@ yarn-error.log*
 
 # Sentry
 .sentryclirc
+.idea
+.java-version
 
 **.decrypted~**
 /test-results/

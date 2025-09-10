@@ -1,4 +1,5 @@
 import { Flex, Skeleton } from '@chakra-ui/react';
+import BigNumber from 'bignumber.js';
 import React from 'react';
 
 import type { PlatonAppchainWithdrawalsItem } from 'types/api/platonAppchain';
@@ -6,13 +7,12 @@ import { WITHDRAWAL_TX_TYPE, STATUSES } from 'types/api/platonAppchain';
 
 import config from 'configs/app';
 import dayjs from 'lib/date/dayjs';
+import CopyToClipboard from 'ui/shared/CopyToClipboard';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
 import TxEntity from 'ui/shared/entities/tx/TxEntity';
 import TxEntityL1 from 'ui/shared/entities/tx/TxEntityL1';
+import HashStringShorten from 'ui/shared/HashStringShorten';
 import ListItemMobileGrid from 'ui/shared/ListItemMobile/ListItemMobileGrid';
-
-import CopyToClipboard from '../../shared/CopyToClipboard';
-import HashStringShorten from '../../shared/HashStringShorten';
 
 const rollupFeature = config.features.rollup;
 
@@ -32,10 +32,10 @@ const PlatonAppchainWithdrawalsListItem = ({ item, isLoading }: Props) => {
   return (
     <ListItemMobileGrid.Container>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>State batches index</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Label isLoading={ isLoading }>Epoch</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
         <Skeleton isLoaded={ !isLoading } display="inline-block">
-          { item.state_batches_index }
+          { item.epoch }
         </Skeleton>
       </ListItemMobileGrid.Value>
 
@@ -72,6 +72,11 @@ const PlatonAppchainWithdrawalsListItem = ({ item, isLoading }: Props) => {
           lineHeight={ 5 }
           truncation="constant_long"
         />
+      </ListItemMobileGrid.Value>
+
+      <ListItemMobileGrid.Label isLoading={ isLoading }>Value</ListItemMobileGrid.Label>
+      <ListItemMobileGrid.Value>
+        <Skeleton isLoaded={ !isLoading } display="inline-block">{ BigNumber(item.l2_amount).div(BigNumber(10 ** 18)).toFormat() }</Skeleton>
       </ListItemMobileGrid.Value>
 
       { timeAgo && (

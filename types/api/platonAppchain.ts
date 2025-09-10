@@ -2,6 +2,8 @@ import type { AddressParam } from './addressParams';
 
 export type PlatonAppchainDepositsItem = {
   block_timestamp: string;
+  l1_amount: string;
+  l1_block_number: number;
   l1_txn_hash: string;
   l2_event_hash: string;
   no: number;
@@ -40,9 +42,11 @@ export type PlatonAppchainDepositsBatchesResponse = {
 
 export type PlatonAppchainWithdrawalsItem = {
   block_timestamp: string;
+  epoch: number;
   from: AddressParam;
   l1_txn_hash: string;
   l2_txn_hash: string;
+  l2_amount: string;
   no: number;
   state_batches_index: string;
   state_batches_txn_hash: string | null;
@@ -67,6 +71,7 @@ export type PlatonAppchainWithdrawalsBatchesItem = {
   l2_txns: number;
   no: number;
   submitter: string;
+  tx_fee: string;
 }
 
 export type PlatonAppchainWithdrawalsBatchesResponse = {

@@ -18,10 +18,11 @@ const PlatonAppchainWithdrawalsTable = ({ items, top, isLoading }: Props) => {
     <Table variant="simple" size="sm" style={{ tableLayout: 'auto' }} minW="950px">
       <Thead top={ top }>
         <Tr>
-          <Th>State batches index</Th>
+          <Th>Epoch</Th>
           <Th>From</Th>
           <Th>L1 txn hash</Th>
           <Th>L2 txn hash</Th>
+          <Th>Value</Th>
           <Th>Age</Th>
           <Th>State root</Th>
           <Th>State batches txn hash</Th>
