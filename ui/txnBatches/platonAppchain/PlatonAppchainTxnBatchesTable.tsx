@@ -18,7 +18,7 @@ const PlatonAppchainTxnBatchesTable = ({ items, top, isLoading }: Props) => {
     <Table variant="simple" size="sm" minW="850px">
       <Thead top={ top }>
         <Tr>
-          <Th width="60px">NO</Th>
+          <Th width="60px">Epoch #</Th>
           <Th width="170px">L1 block #</Th>
           <Th width="170px">L1 txn hash</Th>
           <Th width="170px">Batch root</Th>

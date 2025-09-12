@@ -4,13 +4,17 @@ import React from 'react';
 
 import type { PlatonAppchainWithdrawalsBatchesItem } from 'types/api/platonAppchain';
 
+import { route } from 'nextjs-routes';
+
 import config from 'configs/app';
 import dayjs from 'lib/date/dayjs';
 import CopyToClipboard from 'ui/shared/CopyToClipboard';
 import AddressEntity from 'ui/shared/entities/address/AddressEntity';
+import BatchEntityL2 from 'ui/shared/entities/block/BatchEntityL2';
 import BlockEntityL1 from 'ui/shared/entities/block/BlockEntityL1';
 import TxEntityL1 from 'ui/shared/entities/tx/TxEntityL1';
 import HashStringShorten from 'ui/shared/HashStringShorten';
+import LinkInternal from 'ui/shared/LinkInternal';
 
 const rollupFeature = config.features.rollup;
 
@@ -25,8 +29,15 @@ const PlatonAppchainTxnBatchesTableItem = ({ item, isLoading }: Props) => {
 
   return (
     <Tr>
-      <Td verticalAlign="middle" fontWeight={ 600 }>
-        <Skeleton isLoaded={ !isLoading } display="inline-block">{ item.no }</Skeleton>
+      <Td verticalAlign="middle">
+        <BatchEntityL2
+          isLoading={ isLoading }
+          number={ item.no }
+          fontSize="sm"
+          lineHeight={ 5 }
+          fontWeight={ 600 }
+          noIcon
+        />
       </Td>
       <Td>
         <BlockEntityL1
@@ -64,10 +75,15 @@ const PlatonAppchainTxnBatchesTableItem = ({ item, isLoading }: Props) => {
           'N/A'
         }
       </Td>
-      <Td>
-        <Skeleton isLoaded={ !isLoading } color="text_secondary" my={ 1 } display="inline-block">
-          <span>{ item.l2_txns }</span>
-        </Skeleton>
+      <Td verticalAlign="middle">
+        <LinkInternal
+          href={ route({ pathname: '/batches/[number]', query: { number: item.no.toString(), tab: 'txs' } }) }
+          isLoading={ isLoading }
+        >
+          <Skeleton isLoaded={ !isLoading } minW="40px" my={ 1 }>
+            { item.l2_txns }
+          </Skeleton>
+        </LinkInternal>
       </Td>
       <Td verticalAlign="middle">
         { item.submitter ? (

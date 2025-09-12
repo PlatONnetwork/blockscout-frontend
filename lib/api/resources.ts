@@ -69,9 +69,12 @@ import type {
 import type {
   PlatonAppchainDepositsResponse,
   // PlatonAppchainDepositsItem,
+  PlatonAppchainWithdrawalsBatch,
+  PlatonAppchainWithdrawalsBatchTxs,
   PlatonAppchainWithdrawalsResponse,
   PlatonAppchainDepositsBatchesResponse,
   PlatonAppchainWithdrawalsBatchesResponse,
+  PlatonAppchainWithdrawalsBatchTxsFilters,
 } from 'types/api/platonAppchain';
 import type { RawTracesResponse } from 'types/api/rawTrace';
 import type { SearchRedirectResult, SearchResult, SearchResultFilters, SearchResultItem } from 'types/api/search';
@@ -661,8 +664,19 @@ export const RESOURCES = {
     filterFields: [],
   },
 
+  platonappchain_withdrawals_batch: {
+    path: '/api/v2/platon-appchain/withdrawals/batches/:number',
+    pathParams: [ 'number' as const ],
+  },
+
   platonappchain_withdrawals_batches_count: {
     path: '/api/v2/platon-appchain/withdrawals-batches/count',
+    filterFields: [ 'start_block_number' as const, 'end_block_number' as const ],
+  },
+
+  platonappchain_withdrawals_batch_txs: {
+    path: '/api/v2/platon-appchain/withdrawals/batches-tx',
+    filterFields: [],
   },
 
   // optimistic L2
@@ -927,7 +941,8 @@ export type PaginatedResources = 'blocks' | 'block_txs' |
 'token_transfers' | 'token_holders' | 'token_inventory' | 'tokens' | 'tokens_bridged' |
 'token_instance_transfers' | 'token_instance_holders' |
 'verified_contracts' |
-'platonappchain_deposits' | 'platonappchain_withdrawals' | 'platonappchain_deposits_batches' | 'platonappchain_withdrawals_batches' |
+'platonappchain_deposits' | 'platonappchain_withdrawals' | 'platonappchain_deposits_batches' |
+'platonappchain_withdrawals_batches' | 'platonappchain_withdrawals_batch_txs' | 'platonappchain_withdrawals_batch' |
 'optimistic_l2_output_roots' | 'optimistic_l2_withdrawals' | 'optimistic_l2_txn_batches' | 'optimistic_l2_deposits' |
 'shibarium_deposits' | 'shibarium_withdrawals' |
 'zkevm_l2_deposits' | 'zkevm_l2_withdrawals' | 'zkevm_l2_txn_batches' | 'zkevm_l2_txn_batch_txs' |
@@ -1061,6 +1076,8 @@ Q extends 'platonappchain_withdrawals' ? PlatonAppchainWithdrawalsResponse :
 Q extends 'platonappchain_deposits' ? PlatonAppchainDepositsResponse :
 Q extends 'platonappchain_withdrawals_batches' ? PlatonAppchainWithdrawalsBatchesResponse :
 Q extends 'platonappchain_deposits_batches' ? PlatonAppchainDepositsBatchesResponse :
+Q extends 'platonappchain_withdrawals_batch' ? PlatonAppchainWithdrawalsBatch :
+Q extends 'platonappchain_withdrawals_batch_txs' ? PlatonAppchainWithdrawalsBatchTxs:
 Q extends 'platonappchain_deposits_count' ? number :
 Q extends 'platonappchain_withdrawals_count' ? number :
 Q extends 'platonappchain_deposits_batches_count' ? number :
@@ -1128,7 +1145,9 @@ Q extends 'validator_staking' ? ValidatorFilters :
 Q extends 'validator_blocks' ? ValidatorFilters :
 Q extends 'validator_action' ? ValidatorFilters :
 Q extends 'validator_delegator' ? ValidatorFilters :
-never;
+Q extends 'platonappchain_withdrawals_batch_txs' ? PlatonAppchainWithdrawalsBatchTxsFilters:
+
+        never;
 /* eslint-enable @typescript-eslint/indent */
 
 /* eslint-disable @typescript-eslint/indent */

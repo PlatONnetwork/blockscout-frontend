@@ -113,7 +113,7 @@ export const optimisticRollup: GetServerSideProps<Props> = async(context) => {
 };
 
 export const batch: GetServerSideProps<Props> = async(context) => {
-  if (!(rollupFeature.isEnabled && (rollupFeature.type === 'zkEvm' || rollupFeature.type === 'zkSync'))) {
+  if (!(rollupFeature.isEnabled && (rollupFeature.type === 'zkEvm' || rollupFeature.type === 'zkSync' || rollupFeature.type === 'platonappchain'))) {
     return {
       notFound: true,
     };

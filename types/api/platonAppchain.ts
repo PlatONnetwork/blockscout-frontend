@@ -1,4 +1,5 @@
 import type { AddressParam } from './addressParams';
+import type { Transaction } from './transaction';
 
 export type PlatonAppchainDepositsItem = {
   block_timestamp: string;
@@ -63,9 +64,37 @@ export type PlatonAppchainWithdrawalsResponse = {
   };
 }
 
+export type PlatonAppchainWithdrawalsBatch = {
+  items: {
+    block_number: number;
+    block_timestamp: string;
+    start_block_number: number;
+    end_block_number: number;
+    epoch: number;
+    from: string;
+    hash: string;
+    state_root: string;
+    tx_fee: string;
+  };
+  next_page_params: null;
+}
+
+export type PlatonAppchainWithdrawalsBatchTxs = {
+  items: Array<Transaction>;
+  // API responce doesn't have next_page_params option, but we need to add it to the type for consistency
+  next_page_params: null;
+}
+
+export interface PlatonAppchainWithdrawalsBatchTxsFilters {
+  start_block_number: number | undefined;
+  end_block_number: number | undefined;
+}
+
 export type PlatonAppchainWithdrawalsBatchesItem = {
   batch_root: string;
   block_timestamp: string;
+  start_block_number: number;
+  end_block_number: number;
   l1_block: number;
   l1_state_batches_hash: string;
   l2_txns: number;
