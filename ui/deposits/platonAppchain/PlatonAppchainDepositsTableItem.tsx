@@ -52,14 +52,16 @@ const PlatonAppchainDepositsTableItem = ({ item, isLoading }: Props) => {
         />
       </Td>
       <Td verticalAlign="middle">
-        <TxEntity
-          isLoading={ isLoading }
-          hash={ item.l2_event_hash }
-          truncation="constant_long"
-          noIcon
-          fontSize="sm"
-          lineHeight={ 5 }
-        />
+        { item.l2_event_hash ? (
+          <TxEntity
+            isLoading={ isLoading }
+            hash={ item.l2_event_hash }
+            truncation="constant_long"
+            noIcon
+            fontSize="sm"
+            lineHeight={ 5 }
+          />
+        ) : 'N/A' }
       </Td>
       <Td>
         <Skeleton isLoaded={ !isLoading } color="text_secondary" my={ 1 } display="inline-block">

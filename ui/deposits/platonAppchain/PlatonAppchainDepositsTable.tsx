@@ -32,7 +32,7 @@ const PlatonAppchainDepositsTable = ({ items, top, isLoading }: Props) => {
       </Thead>
       <Tbody>
         { items.map((item, index) => (
-          <PlatonAppchainDepositsTableItem key={ item.l2_event_hash + (isLoading ? index : '') } item={ item } isLoading={ isLoading }/>
+          <PlatonAppchainDepositsTableItem key={ String(item.no) + item.state_batches_index + (isLoading ? index : '') } item={ item } isLoading={ isLoading }/>
         )) }
       </Tbody>
     </Table>

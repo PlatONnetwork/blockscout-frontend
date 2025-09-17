@@ -6,7 +6,7 @@ export type PlatonAppchainDepositsItem = {
   l1_amount: string;
   l1_block_number: number;
   l1_txn_hash: string;
-  l2_event_hash: string;
+  l2_event_hash: string | null;
   no: number;
   state_batches_index: string;
   state_batches_txn_hash: string;
@@ -124,6 +124,7 @@ export const DEPOSIT_TX_TYPE = [
   'stake',
   'addStake',
   'delegate',
+  'slash',
 ];
 
 export const WITHDRAWAL_TX_TYPE = [

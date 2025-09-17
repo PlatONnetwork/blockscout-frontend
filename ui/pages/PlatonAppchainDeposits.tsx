@@ -40,7 +40,7 @@ const PlatonAppchainDeposits = () => {
       <Show below="lg" ssr={ false }>
         { data.items.map(((item, index) => (
           <PlatonAppchainDepositsListItem
-            key={ item.l2_event_hash + (isPlaceholderData ? index : '') }
+            key={ String(item.no) + item.state_batches_index + (isPlaceholderData ? index : '') }
             isLoading={ isPlaceholderData }
             item={ item }
           />

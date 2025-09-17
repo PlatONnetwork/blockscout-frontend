@@ -55,16 +55,20 @@ const PlatonAppchainDepositsListItem = ({ item, isLoading }: Props) => {
         />
       </ListItemMobileGrid.Value>
 
-      <ListItemMobileGrid.Label isLoading={ isLoading }>L2 txn hash</ListItemMobileGrid.Label>
-      <ListItemMobileGrid.Value>
-        <TxEntity
-          isLoading={ isLoading }
-          hash={ item.l2_event_hash }
-          fontSize="sm"
-          lineHeight={ 5 }
-          truncation="constant_long"
-        />
-      </ListItemMobileGrid.Value>
+      { item.l2_event_hash && (
+        <>
+          <ListItemMobileGrid.Label isLoading={ isLoading }>L2 txn hash</ListItemMobileGrid.Label>
+          <ListItemMobileGrid.Value>
+            <TxEntity
+              isLoading={ isLoading }
+              hash={ item.l2_event_hash }
+              fontSize="sm"
+              lineHeight={ 5 }
+              truncation="constant_long"
+            />
+          </ListItemMobileGrid.Value>
+        </>
+      ) }
 
       <ListItemMobileGrid.Label isLoading={ isLoading }>Value</ListItemMobileGrid.Label>
       <ListItemMobileGrid.Value>
